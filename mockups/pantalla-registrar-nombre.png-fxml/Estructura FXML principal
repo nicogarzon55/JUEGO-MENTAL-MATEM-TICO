@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.HBox?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" 
+           fx:controller="com.example.AppController"
+           style="-fx-background-color: linear-gradient(to bottom right, #111827, #1F2937);">
+    
+    <VBox maxWidth="400" spacing="20" style="-fx-background-color: #1F2937; -fx-background-radius: 16; -fx-border-color: #374151; -fx-border-radius: 16; -fx-border-width: 1; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 20, 0, 0, 10);">
+        <padding>
+            <Insets top="32" right="32" bottom="32" left="32" />
+        </padding>
+        
+        <!-- Header Section -->
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="Welcome!" style="-fx-text-fill: white;">
+                <font>
+                    <Font size="30" />
+                </font>
+            </Label>
+            <Label text="Please enter your name below" style="-fx-text-fill: #9CA3AF;" />
+        </VBox>
+        
+        <!-- Input Section -->
+        <VBox spacing="8">
+            <Label text="Your Name" style="-fx-text-fill: #D1D5DB; -fx-font-size: 14;" />
+            <TextField fx:id="nameInput" promptText="Enter your name..." 
+                       style="-fx-background-color: #374151; -fx-background-radius: 8; -fx-border-color: #4B5563; -fx-border-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #9CA3AF; -fx-padding: 12 16; -fx-font-size: 14;">
+                <font>
+                    <Font size="14" />
+                </font>
+            </TextField>
+        </VBox>
+        
+        <!-- Greeting Section (initially hidden) -->
+        <VBox fx:id="greetingContainer" visible="false" managed="false" 
+              spacing="4" alignment="CENTER" 
+              style="-fx-background-color: #374151; -fx-background-radius: 8; -fx-border-color: #4B5563; -fx-border-radius: 8; -fx-padding: 16;">
+            
+            <Label text="Hello," style="-fx-text-fill: #9CA3AF; -fx-font-size: 14;" />
+            <Label fx:id="greetingLabel" style="-fx-text-fill: #818CF8; -fx-font-size: 24;">
+                <font>
+                    <Font size="24" />
+                </font>
+            </Label>
+        </VBox>
+    </VBox>
+</StackPane>
