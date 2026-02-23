@@ -1,0 +1,123 @@
+package com.example;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class GameRulesController {
+    
+    @FXML private Button darkModeButton;
+    @FXML private Label darkModeIcon;
+    @FXML private Button closeButton;
+    @FXML private Button okButton;
+    
+    @FXML private Button descriptionTab;
+    @FXML private Button instructionsTab;
+    @FXML private Button rulesTab;
+    
+    @FXML private ScrollPane contentScrollPane;
+    @FXML private VBox descriptionContent;
+    @FXML private VBox instructionsContent;
+    @FXML private VBox rulesContent;
+    
+    private boolean isDarkMode = false;
+    private String currentTab = "description";
+    
+    @FXML
+    public void initialize() {
+        // Configuración inicial
+        showDescription();
+        updateTabStyles();
+    }
+    
+    @FXML
+    private void toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        
+        if (isDarkMode) {
+            darkModeIcon.setText("☀");
+            applyDarkTheme();
+        } else {
+            darkModeIcon.setText("🌙");
+            applyLightTheme();
+        }
+    }
+    
+    @FXML
+    private void showDescription() {
+        currentTab = "description";
+        descriptionContent.setVisible(true);
+        descriptionContent.setManaged(true);
+        instructionsContent.setVisible(false);
+        instructionsContent.setManaged(false);
+        rulesContent.setVisible(false);
+        rulesContent.setManaged(false);
+        
+        updateTabStyles();
+    }
+    
+    @FXML
+    private void showInstructions() {
+        currentTab = "instructions";
+        descriptionContent.setVisible(false);
+        descriptionContent.setManaged(false);
+        instructionsContent.setVisible(true);
+        instructionsContent.setManaged(true);
+        rulesContent.setVisible(false);
+        rulesContent.setManaged(false);
+        
+        updateTabStyles();
+    }
+    
+    @FXML
+    private void showRules() {
+        currentTab = "rules";
+        descriptionContent.setVisible(false);
+        descriptionContent.setManaged(false);
+        instructionsContent.setVisible(false);
+        instructionsContent.setManaged(false);
+        rulesContent.setVisible(true);
+        rulesContent.setManaged(true);
+        
+        updateTabStyles();
+    }
+    
+    @FXML
+    private void closeWindow() {
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
+    }
+    
+    private void updateTabStyles() {
+        // Resetear estilos
+        descriptionTab.getStyleClass().removeAll("active-tab");
+        instructionsTab.getStyleClass().removeAll("active-tab");
+        rulesTab.getStyleClass().removeAll("active-tab");
+        
+        // Aplicar estilo activo
+        switch (currentTab) {
+            case "description":
+                descriptionTab.getStyleClass().add("active-tab");
+                break;
+            case "instructions":
+                instructionsTab.getStyleClass().add("active-tab");
+                break;
+            case "rules":
+                rulesTab.getStyleClass().add("active-tab");
+                break;
+        }
+    }
+    
+    private void applyDarkTheme() {
+        // Aquí aplicarías las clases CSS para el tema oscuro
+        contentScrollPane.getScene().getRoot().getStyleClass().add("dark-theme");
+    }
+    
+    private void applyLightTheme() {
+        // Aquí aplicarías las clases CSS para el tema claro
+        contentScrollPane.getScene().getRoot().getStyleClass().remove("dark-theme");
+    }
+}
