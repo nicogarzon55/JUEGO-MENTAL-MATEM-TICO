@@ -1,0 +1,191 @@
+/* Header */
+.header {
+    -fx-background-color: #8d5cf6;
+}
+
+.header-title {
+    -fx-text-fill: white;
+}
+
+.header-icon {
+    -fx-font-size: 24px;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 50%;
+}
+
+/* Tabs */
+.tabs-container {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+
+.tab-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 12 24;
+}
+
+.tab-button:hover {
+    -fx-text-fill: #111827;
+}
+
+.tab-button.active-tab {
+    -fx-background-color: white;
+    -fx-text-fill: #8d5cf6;
+    -fx-border-color: transparent transparent #8d5cf6 transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* Content */
+.content-area {
+    -fx-background-color: white;
+    -fx-min-height: 500px;
+    -fx-max-height: 500px;
+}
+
+.section-title {
+    -fx-text-fill: #1f2937;
+}
+
+.description-text {
+    -fx-text-fill: #374151;
+    -fx-wrap-text: true;
+}
+
+.italic {
+    -fx-font-style: italic;
+}
+
+/* Feature Box */
+.feature-box {
+    -fx-background-color: #eef2ff;
+    -fx-border-color: #6366f1;
+    -fx-border-width: 0 0 0 4;
+}
+
+.feature-title {
+    -fx-text-fill: #312e81;
+}
+
+.feature-item {
+    -fx-text-fill: #374151;
+}
+
+.feature-note {
+    -fx-text-fill: #4338ca;
+    -fx-font-size: 12px;
+}
+
+/* Steps */
+.step-number {
+    -fx-background-color: #8d5cf6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-alignment: center;
+    -fx-background-radius: 50%;
+}
+
+.step-title {
+    -fx-text-fill: #1f2937;
+}
+
+.step-text {
+    -fx-text-fill: #374151;
+}
+
+.control-text {
+    -fx-text-fill: #374151;
+    -fx-padding: 2 0 0 0;
+}
+
+/* Rules */
+.rule-box {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.rule-title {
+    -fx-text-fill: #1f2937;
+}
+
+.rule-title-warning {
+    -fx-text-fill: #dc2626;
+}
+
+.rule-text {
+    -fx-text-fill: #374151;
+}
+
+/* Footer */
+.footer {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1 0 0 0;
+}
+
+.primary-button {
+    -fx-background-color: #8d5cf6;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+    -fx-padding: 8 24;
+}
+
+.primary-button:hover {
+    -fx-background-color: #7c4de0;
+}
+
+/* Dark Theme */
+.dark-theme .content-area,
+.dark-theme .rules-window {
+    -fx-background-color: #111827;
+}
+
+.dark-theme .section-title,
+.dark-theme .step-title,
+.dark-theme .rule-title {
+    -fx-text-fill: #f3f4f6;
+}
+
+.dark-theme .description-text,
+.dark-theme .step-text,
+.dark-theme .rule-text {
+    -fx-text-fill: #d1d5db;
+}
+
+.dark-theme .tabs-container {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}
+
+.dark-theme .tab-button.active-tab {
+    -fx-background-color: #111827;
+    -fx-text-fill: #a78bfa;
+    -fx-border-color: transparent transparent #a78bfa transparent;
+}
+
+.dark-theme .rule-box {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}
+
+.dark-theme .footer {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}

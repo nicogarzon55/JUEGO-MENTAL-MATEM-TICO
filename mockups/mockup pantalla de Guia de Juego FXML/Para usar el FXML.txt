@@ -1,0 +1,12 @@
+// En tu aplicación principal o donde quieras mostrar la ventana
+FXMLLoader loader = new FXMLLoader(getClass().getResource("GameRulesWindow.fxml"));
+Parent root = loader.load();
+
+// Cargar el CSS
+Scene scene = new Scene(root);
+scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+Stage stage = new Stage();
+stage.setTitle("Guía del Juego");
+stage.setScene(scene);
+stage.show();

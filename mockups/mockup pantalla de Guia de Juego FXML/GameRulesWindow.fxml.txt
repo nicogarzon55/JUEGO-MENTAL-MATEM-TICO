@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx" 
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.GameRulesController"
+      maxWidth="800" 
+      styleClass="rules-window">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="header">
+        <padding>
+            <Insets top="16" right="24" bottom="16" left="24"/>
+        </padding>
+        
+        <Label text="🎮" styleClass="header-icon"/>
+        <Label text="Guía del Juego" styleClass="header-title">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+        
+        <Region HBox.hgrow="ALWAYS"/>
+        
+        <Button fx:id="darkModeButton" onAction="#toggleDarkMode" styleClass="icon-button">
+            <graphic>
+                <Label fx:id="darkModeIcon" text="🌙"/>
+            </graphic>
+        </Button>
+        
+        <Button fx:id="closeButton" onAction="#closeWindow" styleClass="icon-button">
+            <graphic>
+                <Label text="✕"/>
+            </graphic>
+        </Button>
+    </HBox>
+    
+    <!-- Tabs -->
+    <HBox styleClass="tabs-container">
+        <Button fx:id="descriptionTab" text="📖 Descripción" 
+                onAction="#showDescription" 
+                styleClass="tab-button"
+                HBox.hgrow="ALWAYS"/>
+        <Button fx:id="instructionsTab" text="✓ Instrucciones" 
+                onAction="#showInstructions" 
+                styleClass="tab-button"
+                HBox.hgrow="ALWAYS"/>
+        <Button fx:id="rulesTab" text="🎮 Reglas" 
+                onAction="#showRules" 
+                styleClass="tab-button"
+                HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <!-- Content Area -->
+    <ScrollPane fx:id="contentScrollPane" 
+                fitToWidth="true" 
+                styleClass="content-area"
+                VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="24" right="32" bottom="24" left="32"/>
+        </padding>
+        
+        <!-- Description Content -->
+        <VBox fx:id="descriptionContent" spacing="16" visible="true" managed="true">
+            <Label text="Descripción General" styleClass="section-title">
+                <font>
+                    <Font name="System Bold" size="20"/>
+                </font>
+            </Label>
+            
+            <Label text="Este es solo un ejemplo de cómo se vería la descripción del juego. Aquí deberías incluir una descripción real y detallada de tu juego." 
+                   wrapText="true" 
+                   styleClass="description-text italic"/>
+            
+            <Label text="Este espacio está destinado para proporcionar una visión general del juego, explicando de qué trata, cuál es su objetivo principal y qué pueden esperar los jugadores al comenzar su aventura." 
+                   wrapText="true" 
+                   styleClass="description-text"/>
+            
+            <VBox styleClass="feature-box" spacing="8">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                
+                <Label text="Ejemplo de Características" styleClass="feature-title">
+                    <font>
+                        <Font name="System Bold" size="16"/>
+                    </font>
+                </Label>
+                
+                <Label text="• Característica de ejemplo 1" styleClass="feature-item" wrapText="true"/>
+                <Label text="• Característica de ejemplo 2" styleClass="feature-item" wrapText="true"/>
+                <Label text="• Característica de ejemplo 3" styleClass="feature-item" wrapText="true"/>
+                <Label text="• Característica de ejemplo 4" styleClass="feature-item" wrapText="true"/>
+                
+                <Label text="* Reemplaza estas características con las reales de tu juego" 
+                       styleClass="feature-note italic" wrapText="true"/>
+            </VBox>
+        </VBox>
+        
+        <!-- Instructions Content -->
+        <VBox fx:id="instructionsContent" spacing="16" visible="false" managed="false">
+            <Label text="Cómo Jugar" styleClass="section-title">
+                <font>
+                    <Font name="System Bold" size="20"/>
+                </font>
+            </Label>
+            
+            <Label text="Las siguientes instrucciones son solo un ejemplo. Deberás reemplazarlas con las instrucciones reales de tu juego." 
+                   wrapText="true" 
+                   styleClass="description-text italic"/>
+            
+            <!-- Step 1 -->
+            <HBox spacing="16" alignment="TOP_LEFT">
+                <Label text="1" styleClass="step-number"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Paso 1 - Ejemplo" styleClass="step-title">
+                        <font>
+                            <Font name="System Bold" size="14"/>
+                        </font>
+                    </Label>
+                    <Label text="Esta es una instrucción de ejemplo. Aquí deberías explicar el primer paso que los jugadores deben seguir para comenzar a jugar." 
+                           wrapText="true" 
+                           styleClass="step-text"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Step 2 -->
+            <HBox spacing="16" alignment="TOP_LEFT">
+                <Label text="2" styleClass="step-number"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Paso 2 - Controles (Ejemplo)" styleClass="step-title">
+                        <font>
+                            <Font name="System Bold" size="14"/>
+                        </font>
+                    </Label>
+                    <Label text="Ejemplo de controles del juego:" wrapText="true" styleClass="step-text"/>
+                    <Label text="[Tecla 1] - Descripción de acción 1" styleClass="control-text"/>
+                    <Label text="[Tecla 2] - Descripción de acción 2" styleClass="control-text"/>
+                    <Label text="[Tecla 3] - Descripción de acción 3" styleClass="control-text"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Step 3 -->
+            <HBox spacing="16" alignment="TOP_LEFT">
+                <Label text="3" styleClass="step-number"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Paso 3 - Ejemplo" styleClass="step-title">
+                        <font>
+                            <Font name="System Bold" size="14"/>
+                        </font>
+                    </Label>
+                    <Label text="Aquí deberías explicar cómo se desarrolla el juego, qué deben hacer los jugadores durante la partida y cualquier mecánica importante." 
+                           wrapText="true" 
+                           styleClass="step-text"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Step 4 -->
+            <HBox spacing="16" alignment="TOP_LEFT">
+                <Label text="4" styleClass="step-number"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Paso 4 - Ejemplo" styleClass="step-title">
+                        <font>
+                            <Font name="System Bold" size="14"/>
+                        </font>
+                    </Label>
+                    <Label text="Explica aquí cómo se gana el juego, qué objetivos deben cumplirse o qué condiciones determinan la victoria." 
+                           wrapText="true" 
+                           styleClass="step-text"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- Rules Content -->
+        <VBox fx:id="rulesContent" spacing="16" visible="false" managed="false">
+            <Label text="Reglas del Juego" styleClass="section-title">
+                <font>
+                    <Font name="System Bold" size="20"/>
+                </font>
+            </Label>
+            
+            <Label text="Las siguientes reglas son solo ejemplos. Personaliza esta sección con las reglas reales de tu juego." 
+                   wrapText="true" 
+                   styleClass="description-text italic"/>
+            
+            <!-- Rule 1 -->
+            <VBox styleClass="rule-box" spacing="8">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <Label text="✓ Regla de Ejemplo 1" styleClass="rule-title">
+                    <font>
+                        <Font name="System Bold" size="14"/>
+                    </font>
+                </Label>
+                <Label text="• Punto de regla de ejemplo" styleClass="rule-text"/>
+                <Label text="• Otro punto de regla de ejemplo" styleClass="rule-text"/>
+                <Label text="• Tercer punto de regla de ejemplo" styleClass="rule-text"/>
+                <Label text="• Cuarto punto de regla de ejemplo" styleClass="rule-text"/>
+            </VBox>
+            
+            <!-- Rule 2 -->
+            <VBox styleClass="rule-box" spacing="8">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <Label text="✓ Regla de Ejemplo 2" styleClass="rule-title">
+                    <font>
+                        <Font name="System Bold" size="14"/>
+                    </font>
+                </Label>
+                <Label text="Esta es una descripción de ejemplo de una regla del juego. Aquí deberías explicar una regla importante que los jugadores necesiten conocer." 
+                       wrapText="true" 
+                       styleClass="rule-text"/>
+            </VBox>
+            
+            <!-- Rule 3 -->
+            <VBox styleClass="rule-box" spacing="8">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <Label text="✗ Restricciones o Prohibiciones (Ejemplo)" styleClass="rule-title-warning">
+                    <font>
+                        <Font name="System Bold" size="14"/>
+                    </font>
+                </Label>
+                <Label text="• Ejemplo de acción prohibida 1" styleClass="rule-text"/>
+                <Label text="• Ejemplo de acción prohibida 2" styleClass="rule-text"/>
+                <Label text="• Ejemplo de acción prohibida 3" styleClass="rule-text"/>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+    
+    <!-- Footer -->
+    <HBox alignment="CENTER_RIGHT" styleClass="footer" spacing="12">
+        <padding>
+            <Insets top="16" right="32" bottom="16" left="32"/>
+        </padding>
+        
+        <Button fx:id="okButton" text="¡Entendido!" 
+                onAction="#closeWindow" 
+                styleClass="primary-button">
+            <font>
+                <Font name="System Bold" size="14"/>
+            </font>
+        </Button>
+    </HBox>
+</VBox>
