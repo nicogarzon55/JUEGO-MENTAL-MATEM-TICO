@@ -1,0 +1,41 @@
+public class jugador {
+    private String nombre;
+    private int puntaje;
+
+    public void ingresarValor (int in){
+
+    }
+    public void llenarOut (int out){
+
+    }
+
+    public String jugador(String nombre, int puntaje) {
+        if (!(nombre.equals(null)) && puntaje>0) {
+            this.nombre = nombre;
+            this.puntaje = puntaje;
+            return "Jugador registrado con exito";
+        } else if (nombre.equals(null)){
+            return "El usuario no puede estar vacio";
+        } else if (puntaje<0) {
+            return "Error en el puntaje, porfavor empezar de nuevo";
+        }else {
+            return "Error en crear jugador";
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+}
