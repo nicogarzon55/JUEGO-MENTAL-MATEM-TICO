@@ -9,7 +9,7 @@ public class Jugador {
 
     }
 
-    public String Jugador(String nombre, int puntaje) {
+    public Jugador(String nombre, int puntaje) {
         if (!(nombre.equals(null)) && puntaje>0) {
             this.nombre = nombre;
             this.puntaje = puntaje;
