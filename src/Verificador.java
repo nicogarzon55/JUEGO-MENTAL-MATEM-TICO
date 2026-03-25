@@ -1,3 +1,9 @@
+/**
+ * Clase encargada de validar las respuestas del jugador.
+ * Compara el valor de salida generado por la regla
+ * con el valor ingresado por el usuario.
+ */
+
 public class Verificador {
 
     private Regla regla;
