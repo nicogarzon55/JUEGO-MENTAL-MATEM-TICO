@@ -1,0 +1,64 @@
+package com.juegomental.matematico.controlador;
+
+import com.juegomental.matematico.modelo.Jugador;
+
+public class JugadorController {
+
+    private Jugador jugador;
+
+    public JugadorController() {
+        // Constructor vacío, se creará el jugador cuando se registre
+        this.jugador = null;
+    }
+
+    public String registrarJugador(String nombre, int puntaje) {
+        try {
+            this.jugador = new Jugador(nombre, puntaje);
+            return "Jugador registrado con exito";
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String getNombreJugador() {
+        if (jugador != null) {
+            return jugador.getNombre();
+        }
+        return "No hay jugador registrado";
+    }
+
+    public int getPuntajeJugador() {
+        if (jugador != null) {
+            return jugador.getPuntaje();
+        }
+        return -1;
+    }
+
+    public void actualizarNombre(String nombre) {
+        if (jugador != null) {
+            jugador.setNombre(nombre);
+        }
+    }
+
+    public void actualizarPuntaje(int puntaje) {
+        if (jugador != null) {
+            jugador.setPuntaje(puntaje);
+        }
+    }
+
+    public void ingresarValor(int valor) {
+        if (jugador != null) {
+            jugador.ingresarValor(valor);
+        }
+    }
+
+    public void llenarOut(int out) {
+        if (jugador != null) {
+            jugador.llenarOut(out);
+        }
+    }
+
+    public boolean hayJugadorRegistrado() {
+        return jugador != null;
+    }
+}
