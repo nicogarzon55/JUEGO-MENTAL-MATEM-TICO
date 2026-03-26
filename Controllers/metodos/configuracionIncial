@@ -1,0 +1,11 @@
+//CONFIGURACIÓN INICIAL (método registrarJugador)
+public String registrarJugador(String nombre) {
+    try {
+        // Puntaje base fijo de 10 puntos ← CONFIGURACIÓN INICIAL
+        this.jugador = new Jugador(nombre, 10);
+        this.puntajeMaximo = 10;
+        return "Jugador registrado con exito. Puntaje inicial: 10 puntos";
+    } catch (IllegalArgumentException e) {
+        return e.getMessage();
+    }
+}
