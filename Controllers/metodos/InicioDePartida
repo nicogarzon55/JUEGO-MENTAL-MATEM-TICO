@@ -1,0 +1,20 @@
+//INICIO DE PARTIDA (método iniciarNuevaPartida)
+public String iniciarNuevaPartida(int nivel) {
+    if (jugador == null) {
+        return "Debe registrar un jugador primero";
+    }
+    
+    // Reiniciar estado del juego
+    this.gameController = new GameController();  // ← NUEVA PARTIDA
+    this.enFaseDescubrimiento = true;            // ← REINICIO DE FASE
+    this.reglaDescubierta = false;               // ← REINICIO DE REGLA
+    
+    // Configuración inicial: nivel seleccionado, puntaje base del jugador
+    gameController.iniciarJuego();               // ← INICIA EL JUEGO
+    gameController.seleccionarNivel(nivel);      // ← CONFIGURA NIVEL
+    
+    // Sincronizar puntaje del jugador con la partida
+    jugador.setPuntaje(10);                      // ← REINICIA PUNTAJE A 10
+    
+    return "Partida iniciada en nivel " + nivel + ". Tienes 10 puntos. ¡Buena suerte!";
+}
