@@ -5,47 +5,230 @@ import com.juegomental.matematico.modelo.Jugador;
 public class JugadorController {
 
     private Jugador jugador;
+    private GameController gameController;
+    private boolean enFaseDescubrimiento;
+    private boolean reglaDescubierta;
+    private int puntajeMaximo;
 
     public JugadorController() {
-        // Constructor vacío, se creará el jugador cuando se registre
         this.jugador = null;
+        this.gameController = null;
+        this.enFaseDescubrimiento = true;
+        this.reglaDescubierta = false;
+        this.puntajeMaximo = 0;
     }
 
-    public String registrarJugador(String nombre, int puntaje) {
+    // ==================== CONFIGURACIÓN INICIAL ====================
+    
+    public String registrarJugador(String nombre) {
         try {
-            this.jugador = new Jugador(nombre, puntaje);
-            return "Jugador registrado con exito";
+            // Puntaje base fijo de 10 puntos
+            this.jugador = new Jugador(nombre, 10);
+            this.puntajeMaximo = 10;
+            return "Jugador registrado con exito. Puntaje inicial: 10 puntos";
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
     }
 
+    public String iniciarNuevaPartida(int nivel) {
+        if (jugador == null) {
+            return "Debe registrar un jugador primero";
+        }
+        
+        // Reiniciar estado del juego
+        this.gameController = new GameController();
+        this.enFaseDescubrimiento = true;
+        this.reglaDescubierta = false;
+        
+        // Configuración inicial: nivel seleccionado, puntaje base del jugador
+        gameController.iniciarJuego();
+        gameController.seleccionarNivel(nivel);
+        
+        // Sincronizar puntaje del jugador con la partida
+        jugador.setPuntaje(10); // Reiniciar a 10 puntos
+        
+        return "Partida iniciada en nivel " + nivel + ". Tienes 10 puntos. ¡Buena suerte!";
+    }
+
+    // ==================== FASE 1: DESCUBRIR REGLA ====================
+    
+    public String probarNumero(int numero) {
+        if (jugador == null) {
+            return "Debe registrar un jugador primero";
+        }
+        
+        if (!enFaseDescubrimiento) {
+            return "Ya has pasado a la fase de validación. Completa la tabla primero.";
+        }
+        
+        if (reglaDescubierta) {
+            return "¡Ya descubriste la regla! Pasa a la siguiente fase para validarla.";
+        }
+        
+        // Verificar si tiene puntos suficientes
+        if (jugador.getPuntaje() <= 0) {
+            return "Game Over. Te quedaste sin puntos. Puntaje final: " + puntajeMaximo;
+        }
+        
+        // Probar número (cuesta 1 punto)
+        int resultado = gameController.verificarRespuesta(numero);
+        
+        // Restar punto por el intento
+        int nuevoPuntaje = jugador.getPuntaje() - 1;
+        jugador.setPuntaje(nuevoPuntaje);
+        
+        // Actualizar puntaje máximo
+        if (nuevoPuntaje > puntajeMaximo) {
+            puntajeMaximo = nuevoPuntaje;
+        }
+        
+        // Usar intento en el gameController
+        gameController.usarIntento();
+        
+        if (nuevoPuntaje <= 0) {
+            return "Game Over. Te quedaste sin puntos. Puntaje final: " + puntajeMaximo;
+        }
+        
+        return "Número: " + numero + " | Resultado: " + resultado + 
+               " | Puntos restantes: " + nuevoPuntaje;
+    }
+
+    public String descubrirRegla(String reglaPropuesta) {
+        if (jugador == null) {
+            return "Debe registrar un jugador primero";
+        }
+        
+        if (!enFaseDescubrimiento) {
+            return "Ya estás en la fase de validación.";
+        }
+        
+        if (jugador.getPuntaje() <= 0) {
+            return "Game Over. Te quedaste sin puntos. Puntaje final: " + puntajeMaximo;
+        }
+        
+        // Aquí validarías si la regla propuesta es correcta
+        // Por ahora asumimos que sí para continuar con el flujo
+        boolean reglaCorrecta = validarRegla(reglaPropuesta);
+        
+        if (reglaCorrecta) {
+            this.reglaDescubierta = true;
+            this.enFaseDescubrimiento = false;
+            return "¡Correcto! Has descubierto la regla. Ahora pasa a la fase de validación.";
+        } else {
+            // Restar punto por intento fallido de adivinar la regla
+            int nuevoPuntaje = jugador.getPuntaje() - 1;
+            jugador.setPuntaje(nuevoPuntaje);
+            
+            if (nuevoPuntaje <= 0) {
+                return "Game Over. Te quedaste sin puntos. Puntaje final: " + puntajeMaximo;
+            }
+            
+            return "Regla incorrecta. Sigue probando números. Puntos restantes: " + nuevoPuntaje;
+        }
+    }
+
+    // ==================== FASE 2: VALIDAR REGLA ====================
+    
+    public String validarRespuesta(int numero, int respuestaUsuario) {
+        if (jugador == null) {
+            return "Debe registrar un jugador primero";
+        }
+        
+        if (enFaseDescubrimiento) {
+            return "Primero debes descubrir la regla en la fase 1.";
+        }
+        
+        if (!reglaDescubierta) {
+            return "Aún no has descubierto la regla correctamente.";
+        }
+        
+        // Obtener resultado correcto del gameController
+        int resultadoCorrecto = gameController.verificarRespuesta(numero);
+        
+        if (respuestaUsuario == resultadoCorrecto) {
+            return "CORRECTO";
+        } else {
+            return "INCORRECTO";
+        }
+    }
+
+    public String finalizarPartida(boolean completaExitosa) {
+        if (jugador == null) {
+            return "No hay jugador registrado";
+        }
+        
+        if (completaExitosa && reglaDescubierta) {
+            // Ganó 5 puntos adicionales
+            int puntajeFinal = jugador.getPuntaje() + 5;
+            jugador.setPuntaje(puntajeFinal);
+            
+            if (puntajeFinal > puntajeMaximo) {
+                puntajeMaximo = puntajeFinal;
+            }
+            
+            return "¡Felicidades! Completaste el juego. Puntaje final: " + puntajeFinal;
+        } else {
+            // Perdió, se guarda el puntaje máximo alcanzado
+            return "Juego terminado. Puntaje máximo alcanzado: " + puntajeMaximo;
+        }
+    }
+
+    // ==================== MÉTODOS DE CONSULTA ====================
+    
+    public int getNumeroActual() {
+        if (gameController != null) {
+            return gameController.obtenerNumeroInicial();
+        }
+        return 0;
+    }
+
+    public int getResultadoActual() {
+        if (gameController != null) {
+            return gameController.obtenerPuntos();
+        }
+        return 0;
+    }
+
+    public int getPuntajeActual() {
+        return jugador != null ? jugador.getPuntaje() : 0;
+    }
+
+    public int getPuntajeMaximo() {
+        return puntajeMaximo;
+    }
+
     public String getNombreJugador() {
-        if (jugador != null) {
-            return jugador.getNombre();
-        }
-        return "No hay jugador registrado";
+        return jugador != null ? jugador.getNombre() : "No hay jugador registrado";
     }
 
-    public int getPuntajeJugador() {
-        if (jugador != null) {
-            return jugador.getPuntaje();
-        }
-        return -1;
+    public boolean isEnFaseDescubrimiento() {
+        return enFaseDescubrimiento;
     }
 
-    public void actualizarNombre(String nombre) {
-        if (jugador != null) {
-            jugador.setNombre(nombre);
-        }
+    public boolean isReglaDescubierta() {
+        return reglaDescubierta;
     }
 
-    public void actualizarPuntaje(int puntaje) {
-        if (jugador != null) {
-            jugador.setPuntaje(puntaje);
-        }
+    public boolean hayJugadorRegistrado() {
+        return jugador != null;
     }
 
+    public boolean hayPartidaActiva() {
+        return gameController != null && jugador != null && jugador.getPuntaje() > 0;
+    }
+
+    // ==================== MÉTODOS PRIVADOS ====================
+    
+    private boolean validarRegla(String reglaPropuesta) {
+        // Aquí implementarías la lógica para validar si la regla es correcta
+        // Por ahora retorna true como ejemplo
+        // En una implementación real, compararías con la regla del nivel actual
+        return true;
+    }
+
+    // ==================== MÉTODOS DE LA CLASE JUGADOR ====================
+    
     public void ingresarValor(int valor) {
         if (jugador != null) {
             jugador.ingresarValor(valor);
@@ -56,9 +239,5 @@ public class JugadorController {
         if (jugador != null) {
             jugador.llenarOut(out);
         }
-    }
-
-    public boolean hayJugadorRegistrado() {
-        return jugador != null;
     }
 }
