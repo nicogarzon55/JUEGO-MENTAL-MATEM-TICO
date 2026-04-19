@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tu.paquete.JuegoController"
+            prefWidth="800"
+            prefHeight="600">
+
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15"
+              style="-fx-padding: 20; -fx-background-color: linear-gradient(to right, #eef2ff, #e0e7ff);">
+
+            <Button text="←"
+                    prefWidth="40"
+                    prefHeight="40"
+                    style="-fx-background-radius: 20;"/>
+
+            <Label text="Nivel 1 - Completa los valores Salida"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <!-- Espaciador para empujar el botón de la luna a la derecha -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- BOTÓN MODO OSCURO -->
+            <Button fx:id="btnTema"
+                    text="🌙"
+                    prefWidth="45"
+                    prefHeight="45"
+                    style="-fx-background-radius: 25;
+                           -fx-font-size: 16px;"/>
+        </HBox>
+    </top>
+
+    <!-- TABLA -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+
+            <TableView fx:id="tabla"
+                       prefWidth="650"
+                       prefHeight="350"
+                       editable="true"
+                       style="-fx-background-radius: 20;
+                              -fx-border-radius: 20;">
+
+                <columns>
+                    <TableColumn fx:id="colEntrada"
+                                 text="Entrada"
+                                 prefWidth="325"
+                                 editable="true"/>
+
+                    <TableColumn fx:id="colSalida"
+                                 text="Salida"
+                                 prefWidth="325"/>
+                </columns>
+
+            </TableView>
+
+        </VBox>
+    </center>
+
+    <!-- BOTONES INFERIORES -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="40"
+              style="-fx-padding: 25;">
+
+            <Button text="Regresa y prueba más entradas"
+                    prefWidth="260"
+                    prefHeight="50"
+                    style="-fx-background-color: #4b5563;
+                           -fx-text-fill: white;
+                           -fx-background-radius: 25;"/>
+
+            <Button text="Revisa mis respuestas"
+                    prefWidth="220"
+                    prefHeight="50"
+                    style="-fx-background-color: #16a34a;
+                           -fx-text-fill: white;
+                           -fx-background-radius: 25;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
