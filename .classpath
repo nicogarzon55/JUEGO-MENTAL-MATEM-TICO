@@ -26,27 +26,23 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.base.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.media.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx.web.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/javafx-swt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/jdk.jsobject.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/jfx.incubator.input.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andre/Downloads/DiseñoInterfaces/javafx-sdk-26/lib/jfx.incubator.richtext.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Downloads/fx21/javafx-sdk-21.0.11/lib/javafx-swt.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

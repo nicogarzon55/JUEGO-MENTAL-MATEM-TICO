@@ -1,38 +1,26 @@
 package com.juegomental.matematico.controlador;
 
-import com.juegomental.matematico.modelo.Partida;
-import com.juegomental.matematico.servicios.Navegador;
+import com.juegomental.matematico.vista.Navegacion;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class SelectorNivelController {
 
-    private Partida partida = InicioController.getPartida();
+    private void irNivel(Button btn) {
+        Stage stage = (Stage) btn.getScene().getWindow();
 
-    @FXML
-    public void seleccionarNivel1(){ abrirNivel(1); }
-
-    @FXML
-    public void seleccionarNivel2(){ abrirNivel(2); }
-
-    @FXML
-    public void seleccionarNivel3(){ abrirNivel(3); }
-
-    @FXML
-    public void seleccionarNivel4(){ abrirNivel(4); }
-
-    @FXML
-    public void seleccionarNivel5(){ abrirNivel(5); }
-
-    @FXML
-    public void seleccionarNivel6(){ abrirNivel(6); }
-
-    @FXML
-    public void seleccionarNivel7(){ abrirNivel(7); }
-
-    private void abrirNivel(int nivel){
-
-        partida.setNivelActual(nivel);
-
-        Navegador.cambiarVista("InterfazAdivinarRegla.fxml");
+        Navegacion.cambiarEscena(
+                stage,
+                "/com/juegomental/matematico/vista/InterfazJuegoPrincipal.fxml"
+        );
     }
+
+    @FXML public void irNivel1() { }
+    @FXML public void irNivel2() { }
+    @FXML public void irNivel3() { }
+    @FXML public void irNivel4() { }
+    @FXML public void irNivel5() { }
+    @FXML public void irNivel6() { }
+    @FXML public void irNivel7() { }
 }

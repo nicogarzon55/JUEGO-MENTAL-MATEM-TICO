@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juegomental.matematico.controlador.JuegoController">
+
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 20; -fx-background-color: linear-gradient(to right, #eef2ff, #e0e7ff);">
+
+            <Button fx:id="volveratras" onAction="#volver" prefHeight="40" prefWidth="40" style="-fx-background-radius: 20;" text="←" />
+
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Nivel 1 - Completa los valores Salida" />
+
+            <!-- Espaciador para empujar el botón de la luna a la derecha -->
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- BOTÓN MODO OSCURO -->
+            <Button fx:id="btnTema" prefHeight="45" prefWidth="45" style="-fx-background-radius: 25;                            -fx-font-size: 16px;" text="🌙" />
+        </HBox>
+    </top>
+
+    <!-- TABLA -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+
+            <TableView fx:id="tabla" editable="true" prefHeight="350" prefWidth="650" style="-fx-background-radius: 20;                               -fx-border-radius: 20;">
+
+                <columns>
+                    <TableColumn fx:id="colEntrada" editable="true" prefWidth="325" text="Entrada" />
+
+                    <TableColumn fx:id="colSalida" prefWidth="325" text="Salida" />
+                </columns>
+
+            </TableView>
+
+        </VBox>
+    </center>
+
+    <!-- BOTONES INFERIORES -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="40" style="-fx-padding: 25;">
+
+            <Button fx:id="btn_retornar" onAction="#regresar" prefHeight="50" prefWidth="260" style="-fx-background-color: #4b5563;                            -fx-text-fill: white;                            -fx-background-radius: 25;" text="Regresa y prueba más entradas" />
+
+            <Button fx:id="btn_verificar" onAction="#verificar" prefHeight="50" prefWidth="220" style="-fx-background-color: #16a34a;                            -fx-text-fill: white;                            -fx-background-radius: 25;" text="Revisa mis respuestas" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
