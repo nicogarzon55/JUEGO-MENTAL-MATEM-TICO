@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.poli.jmm.controller.ReglasController"
+            styleClass="root">
+
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-background-color:#8d5cf6; -fx-padding:15;">
+
+            <Label text="🎮 Guía del Juego"
+                   style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="btnTema"
+                   text="🌙"
+                   styleClass="theme-toggle"/>
+        </HBox>
+    </top>
+
+    <!-- TABS -->
+    <center>
+        <VBox>
+
+            <HBox spacing="10" alignment="CENTER"
+                  style="-fx-padding:10;">
+
+                <Button text="Descripción" onAction="#mostrarDescripcion"/>
+                <Button text="Instrucciones" onAction="#mostrarInstrucciones"/>
+                <Button text="Reglas" onAction="#mostrarReglas"/>
+
+            </HBox>
+
+            <!-- CONTENIDO -->
+            <ScrollPane fitToWidth="true">
+                <content>
+                    <VBox fx:id="contenido"
+                          spacing="10"
+                          style="-fx-padding:20;"/>
+                </content>
+            </ScrollPane>
+
+        </VBox>
+    </center>
+
+    <!-- FOOTER -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT"
+              style="-fx-padding:15;">
+
+            <Button text="Entendido"
+                    onAction="#cerrar"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
