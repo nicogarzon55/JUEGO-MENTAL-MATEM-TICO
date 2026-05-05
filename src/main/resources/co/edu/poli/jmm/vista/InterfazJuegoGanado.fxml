@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="650" prefWidth="800"
+            style="-fx-background-color: linear-gradient(to bottom right, #111827, #1f2937);"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17"
+            fx:controller="co.edu.poli.jmm.controladores.JuegoGanadoController">
+
+    <!-- BOTÓN TEMA (ARRIBA DERECHA) -->
+    <top>
+        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 20;">
+            <Button fx:id="btnTema" prefHeight="45" prefWidth="45"
+                    onAction="#onToggleTema"
+                    style="-fx-background-color: #374151; -fx-text-fill: white;
+                           -fx-background-radius: 25; -fx-font-size: 16px; -fx-cursor: hand;"
+                    text="🌙" />
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO CENTRAL -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20;">
+
+            <Label style="-fx-font-size: 80px;" text="🎉" />
+
+            <Label style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #34d399;"
+                   text="¡Gran trabajo!" />
+
+            <Label fx:id="lblTitulo"
+                   style="-fx-font-size: 16px; -fx-text-fill: #d1d5db;"
+                   text="¡Has completado correctamente todos los valores!" />
+
+            <Label fx:id="lblPuntaje"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #7c3aed;"
+                   text="Puntaje: 0" />
+
+            <TableView fx:id="tablaResultados" prefHeight="280" prefWidth="600"
+                       style="-fx-background-color: #1f2937;
+                              -fx-control-inner-background: #1f2937;
+                              -fx-table-cell-border-color: #374151;
+                              -fx-text-background-color: #e5e7eb;
+                              -fx-background-radius: 20; -fx-border-radius: 20;
+                              -fx-border-color: #374151;">
+                <columns>
+                    <TableColumn fx:id="colEntrada" prefWidth="300" text="Entrada" />
+                    <TableColumn fx:id="colSalida"  prefWidth="300" text="Salida Correcta" />
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+    <!-- BOTONES INFERIORES -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="40" style="-fx-padding: 30;">
+
+            <Button prefHeight="50" prefWidth="200"
+                    onAction="#onIntentoNuevo"
+                    style="-fx-background-color: #7c3aed; -fx-text-fill: white;
+                           -fx-font-size: 16px; -fx-background-radius: 25;"
+                    text="Intento Nuevo" />
+
+            <Button fx:id="btnSiguienteNivel"
+                    prefHeight="50" prefWidth="200"
+                    onAction="#onSiguienteNivel"
+                    style="-fx-background-color: #2563eb; -fx-text-fill: white;
+                           -fx-font-size: 16px; -fx-background-radius: 25;"
+                    text="Siguiente Nivel" />
+
+        </HBox>
+    </bottom>
+
+</BorderPane>

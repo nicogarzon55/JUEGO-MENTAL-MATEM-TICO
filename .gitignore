@@ -1,0 +1,15 @@
+target/
+*.class
+
+# IDEs
+.idea/
+.settings/
+.project
+.classpath
+bin/
+
+# OS
+.DS_Store
+
+# Evitar archivos reservados en Windows
+nul
