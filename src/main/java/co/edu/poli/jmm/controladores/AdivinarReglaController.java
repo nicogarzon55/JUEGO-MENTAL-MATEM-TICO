@@ -57,21 +57,45 @@ public class AdivinarReglaController {
     public void initialize() {
         colEntrada.setCellValueFactory(data -> data.getValue().entradaProperty());
         colSalida.setCellValueFactory(data  -> data.getValue().salidaProperty());
+        colEntrada.setCellFactory(col -> crearCeldaCentrada());
+        colSalida.setCellFactory(col -> crearCeldaCentrada());
 
         // Encabezados oscuros para los títulos de la tabla
         javafx.scene.control.Label headerEntrada = new javafx.scene.control.Label("ENTRADA");
         headerEntrada.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
+        headerEntrada.setMaxWidth(Double.MAX_VALUE);
+        headerEntrada.setAlignment(javafx.geometry.Pos.CENTER);
         colEntrada.setGraphic(headerEntrada);
         javafx.scene.control.Label headerSalida = new javafx.scene.control.Label("SALIDA");
         headerSalida.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
+        headerSalida.setMaxWidth(Double.MAX_VALUE);
+        headerSalida.setAlignment(javafx.geometry.Pos.CENTER);
         colSalida.setGraphic(headerSalida);
 
+        tablaVista.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tablaVista.setItems(filas);
 
         // Solo números enteros permitidos en el campo de texto
         txtEntrada.textProperty().addListener((obs, viejo, nuevo) -> {
             if (!nuevo.matches("-?\\d*")) txtEntrada.setText(viejo);
         });
+    }
+
+    private TableCell<FilaTabla, Number> crearCeldaCentrada() {
+        return new TableCell<>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(String.valueOf(item.intValue()));
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setStyle("-fx-text-fill: #e5e7eb; -fx-font-size: 16; -fx-font-weight: bold;");
+                }
+            }
+        };
     }
 
     /** Llamado desde UsuarioController para inyectar el modelo. */

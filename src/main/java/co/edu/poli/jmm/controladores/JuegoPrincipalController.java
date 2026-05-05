@@ -43,6 +43,7 @@ public class JuegoPrincipalController {
         private final SimpleIntegerProperty entrada;
         private final SimpleStringProperty  salidaTexto; // el jugador escribe aquí
         private Integer salidaIngresada = null;
+        private Boolean respuestaCorrecta = null;
 
         public FilaFase2(int entrada) {
             this.entrada     = new SimpleIntegerProperty(entrada);
@@ -57,6 +58,8 @@ public class JuegoPrincipalController {
 
         public Integer getSalidaIngresada()            { return salidaIngresada; }
         public void setSalidaIngresada(Integer v)      { this.salidaIngresada = v; }
+        public Boolean getRespuestaCorrecta()          { return respuestaCorrecta; }
+        public void setRespuestaCorrecta(Boolean v)    { this.respuestaCorrecta = v; }
     }
 
     // ── Inicialización ────────────────────────────────────────────────────────
@@ -64,6 +67,20 @@ public class JuegoPrincipalController {
     @FXML
     public void initialize() {
         colEntrada.setCellValueFactory(data -> data.getValue().entradaProperty());
+        colEntrada.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(String.valueOf(item.intValue()));
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    aplicarEstiloResultado(this, getTableRow().getItem());
+                }
+            }
+        });
 
         // Columna editable de salida
         colSalida.setCellValueFactory(data -> data.getValue().salidaTextoProperty());
@@ -71,7 +88,7 @@ public class JuegoPrincipalController {
             private final TextField tf = new TextField();
             {
                 tf.setNodeOrientation(javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
-                tf.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+                tf.setAlignment(javafx.geometry.Pos.CENTER);
                 tf.setTextFormatter(new TextFormatter<>(change ->
                     change.getControlNewText().matches("-?\\d*") ? change : null
                 ));
@@ -86,12 +103,15 @@ public class JuegoPrincipalController {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
+                    setStyle("");
                 } else {
                     String value = item == null ? "" : item;
                     if (!tf.isFocused() && !tf.getText().equals(value)) {
                         tf.setText(value);
                         tf.positionCaret(tf.getText().length());
                     }
+                    aplicarEstiloResultado(this, getTableRow().getItem());
+                    tf.setStyle(estiloCampoResultado(getTableRow().getItem()));
                     setGraphic(tf);
                 }
             }
@@ -99,13 +119,14 @@ public class JuegoPrincipalController {
         colSalida.setEditable(true);
         tabla.setEditable(true);
         tabla.setNodeOrientation(javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+        tabla.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Encabezados oscuros para los títulos de la tabla
-        javafx.scene.control.Label headerEntrada = new javafx.scene.control.Label("Entrada");
-        headerEntrada.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
+        // Encabezados claros para los títulos de la tabla
+        javafx.scene.control.Label headerEntrada = new javafx.scene.control.Label("ENTRADA");
+        headerEntrada.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold; -fx-font-size: 14;");
         colEntrada.setGraphic(headerEntrada);
-        javafx.scene.control.Label headerSalida = new javafx.scene.control.Label("Salida (escribe aquí)");
-        headerSalida.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
+        javafx.scene.control.Label headerSalida = new javafx.scene.control.Label("SALIDA (escribe aquí)");
+        headerSalida.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold; -fx-font-size: 14;");
         colSalida.setGraphic(headerSalida);
 
         tabla.setItems(filas);
@@ -199,19 +220,32 @@ public class JuegoPrincipalController {
         for (int i = 0; i < filas.size(); i++) {
             int correcto = nivelActivo.getReglaActiva().calcularOutput(filas.get(i).getEntrada());
             boolean ok   = i < respuestas.length && respuestas[i] == correcto;
-            String color = ok ? "#dcfce7" : "#fee2e2"; // verde claro / rojo claro
-            int finalI   = i;
-            tabla.setRowFactory(tv -> {
-                TableRow<FilaFase2> row = new TableRow<>();
-                row.itemProperty().addListener((obs, old, item) -> {
-                    if (item != null && tabla.getItems().indexOf(item) == finalI) {
-                        row.setStyle("-fx-background-color: " + color + ";");
-                    }
-                });
-                return row;
-            });
+            filas.get(i).setRespuestaCorrecta(ok);
         }
         tabla.refresh();
+    }
+
+    private void aplicarEstiloResultado(TableCell<FilaFase2, ?> cell, FilaFase2 fila) {
+        Boolean correcta = fila == null ? null : fila.getRespuestaCorrecta();
+        if (correcta == null) {
+            cell.setStyle("-fx-background-color: #1f2937; -fx-text-fill: #e5e7eb;");
+            return;
+        }
+
+        String fondo = correcta ? "#14532d" : "#7f1d1d";
+        cell.setStyle("-fx-background-color: " + fondo + "; -fx-text-fill: white; -fx-font-weight: bold;");
+    }
+
+    private String estiloCampoResultado(FilaFase2 fila) {
+        Boolean correcta = fila == null ? null : fila.getRespuestaCorrecta();
+        if (correcta == null) {
+            return "-fx-background-color: #1f2937; -fx-text-fill: white; "
+                + "-fx-prompt-text-fill: #9ca3af; -fx-border-color: #374151;";
+        }
+
+        String fondo = correcta ? "#14532d" : "#7f1d1d";
+        return "-fx-background-color: " + fondo + "; -fx-text-fill: white; "
+            + "-fx-font-weight: bold; -fx-border-color: transparent;";
     }
 
     private void actualizarUI() {

@@ -43,11 +43,11 @@
                                 text="📖 Reglas"
                                 style="-fx-background-color: transparent;
                                        -fx-text-fill: #a78bfa;
-                                       -fx-font-size: 13;
+                                       -fx-font-size: 14;
                                        -fx-font-weight: bold;
                                        -fx-border-color: #6366f1;
-                                       -fx-border-radius: 10;
-                                       -fx-background-radius: 10;
+                                       -fx-border-radius: 12;
+                                       -fx-background-radius: 12;
                                        -fx-cursor: hand;
                                        -fx-padding: 6 14 6 14;" />
                      </children>
@@ -61,56 +61,63 @@
                      <children>
                         <!-- Fila 1 -->
                         <Button fx:id="btn_level1" onAction="#irNivel1"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="⭐ Nivel 1"
                                 GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <Button fx:id="btn_level2" onAction="#irNivel2"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="⭐ Nivel 2"
                                 GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Button fx:id="btn_level3" onAction="#irNivel3"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="🌟 Nivel 3"
                                 GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
                         <!-- Fila 2 -->
                         <Button fx:id="btn_level4" onAction="#irNivel4"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="🌟 Nivel 4"
                                 GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Button fx:id="btn_level5" onAction="#irNivel5"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="🔥 Nivel 5"
                                 GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Button fx:id="btn_level6" onAction="#irNivel6"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="🔥 Nivel 6"
                                 GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
                         <!-- Fila 3 — centrado -->
                         <Button fx:id="btn_level7" onAction="#irNivel7"
-                                prefWidth="130" prefHeight="50"
+                                prefWidth="150" prefHeight="56"
                                 style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                       -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
-                                       -fx-background-radius: 12; -fx-cursor: hand;"
+                                       -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;
+                                       -fx-background-radius: 12; -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
                                 text="💀 Nivel 7"
                                 GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
