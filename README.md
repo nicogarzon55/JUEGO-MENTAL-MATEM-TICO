@@ -1,11 +1,18 @@
-# JMM – Juego de Reglas Matemáticas
-**Java 17 + JavaFX 21 + SQLite | Patrón MVC**
+# 🧠 JMM – Juego de Reglas Matemáticas  
+**Java 17 + JavaFX 21 + SQLite | Arquitectura MVC**
 
 ---
 
-## Estructura del proyecto
+## 🎯 Descripción
 
-```
+JMM es un juego interactivo donde el usuario debe **descubrir reglas matemáticas ocultas** a partir de ejemplos.  
+El juego se divide en dos fases: exploración (prueba de valores) y validación (completar tabla).
+
+El objetivo es desarrollar el pensamiento lógico y la capacidad de deducción.
+
+---
+
+## 🧱 Estructura del proyecto
 JMMGame/
 ├── pom.xml
 └── src/main/
@@ -60,13 +67,22 @@ JMMGame/
 
 ---
 
-## Reglas matemáticas por nivel
+## 📐 Reglas matemáticas por nivel
 
-| Nivel | Dificultad | Fórmula    |
-|-------|-----------|------------|
-| 1     | Fácil     | y = 2x     |
-| 2     | Medio     | y = x² + 1 |
-| 3     | Difícil   | y = 3x − 5 |
+### 🟢 Fácil
+- y = 2x  
+- y = x + 5  
+- y = x - 1  
+
+### 🟡 Medio
+- y = x² + 1  
+- y = 3x + 2  
+- y = 2x - 3  
+
+### 🔴 Difícil
+- y = 3x - 5  
+- y = x² - x + 2  
+- y = 2x² + 1  
 
 ---
 
