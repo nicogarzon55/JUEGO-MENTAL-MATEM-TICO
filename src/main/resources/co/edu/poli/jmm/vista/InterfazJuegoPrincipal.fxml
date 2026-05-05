@@ -17,7 +17,8 @@
 
             <Button text="←" prefWidth="40" prefHeight="40"
                     onAction="#onRegresar"
-                    style="-fx-background-color: #374151; -fx-text-fill: white;
+                    style="-fx-background-color: #4b5563; -fx-text-fill: white;
+                           -fx-font-size: 16px; -fx-font-weight: bold;
                            -fx-background-radius: 20; -fx-cursor: hand;"/>
 
             <Label fx:id="lblNivel"
@@ -32,27 +33,32 @@
 
             <Button fx:id="btnTema" text="🌙" prefWidth="45" prefHeight="45"
                     onAction="#onToggleTema"
-                    style="-fx-background-color: #374151; -fx-text-fill: white;
-                           -fx-background-radius: 25; -fx-font-size: 16px; -fx-cursor: hand;"/>
+                    style="-fx-background-color: #4b5563; -fx-text-fill: white;
+                           -fx-background-radius: 25; -fx-font-size: 16px;
+                           -fx-font-weight: bold; -fx-cursor: hand;"/>
         </HBox>
     </top>
 
     <!-- TABLA EDITABLE -->
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
-            <TableView fx:id="tabla" prefWidth="650" prefHeight="350"
-                       editable="true"
-                       style="-fx-background-color: #1f2937;
-                              -fx-control-inner-background: #1f2937;
-                              -fx-table-cell-border-color: #374151;
-                              -fx-text-background-color: #e5e7eb;
-                              -fx-background-radius: 20; -fx-border-radius: 20;
-                              -fx-border-color: #374151;">
-                <columns>
-                    <TableColumn fx:id="colEntrada" text="Entrada" prefWidth="325"/>
-                    <TableColumn fx:id="colSalida"  text="Salida (escribe aquí)" prefWidth="325" editable="true"/>
-                </columns>
-            </TableView>
+            <VBox alignment="CENTER" prefWidth="760" prefHeight="420"
+                  style="-fx-background-color: #1f2937; -fx-background-radius: 20;
+                         -fx-border-color: #374151; -fx-border-radius: 20; -fx-border-width: 2;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 5); -fx-padding: 20;">
+                <TableView fx:id="tabla" prefWidth="720" prefHeight="380"
+                           editable="true"
+                           style="-fx-background-color: #1f2937;
+                                  -fx-control-inner-background: #1f2937;
+                                  -fx-table-cell-border-color: #374151;
+                                  -fx-text-background-color: #e5e7eb;
+                                  -fx-font-size: 16;">
+                    <columns>
+                        <TableColumn fx:id="colEntrada" text="ENTRADA" prefWidth="360" style="-fx-alignment: CENTER;"/>
+                        <TableColumn fx:id="colSalida"  text="SALIDA (escribe aquí)" prefWidth="360" editable="true" style="-fx-alignment: CENTER;"/>
+                    </columns>
+                </TableView>
+            </VBox>
         </VBox>
     </center>
 
@@ -64,13 +70,15 @@
                     prefWidth="260" prefHeight="50"
                     onAction="#onRegresar"
                     style="-fx-background-color: #4b5563; -fx-text-fill: white;
-                           -fx-background-radius: 25;"/>
+                           -fx-font-size: 16px; -fx-font-weight: bold;
+                           -fx-background-radius: 25; -fx-cursor: hand;"/>
 
             <Button text="✓ Revisa mis respuestas"
                     prefWidth="220" prefHeight="50"
                     onAction="#onRevisarRespuestas"
                     style="-fx-background-color: #16a34a; -fx-text-fill: white;
-                           -fx-background-radius: 25;"/>
+                           -fx-font-size: 16px; -fx-font-weight: bold;
+                           -fx-background-radius: 25; -fx-cursor: hand;"/>
         </HBox>
     </bottom>
 

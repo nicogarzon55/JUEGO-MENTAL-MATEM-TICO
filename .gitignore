@@ -5,6 +5,7 @@ target/
 .idea/
 .settings/
 .project
+.target/
 .classpath
 bin/
 

@@ -19,18 +19,19 @@
                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox maxWidth="400.0" prefWidth="100.0" spacing="18.0"
+            <VBox maxWidth="700.0" prefWidth="520.0" spacing="24.0"
                   style="-fx-background-color: #1f2937; -fx-background-radius: 20;
-                         -fx-border-color: #374151; -fx-border-radius: 20;"
+                         -fx-border-color: #374151; -fx-border-radius: 20; -fx-border-width: 2;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12,0,0,4);"
                   StackPane.alignment="CENTER">
                <children>
 
                   <!-- Título -->
                   <VBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Label style="-fx-text-fill: white; -fx-font-size: 26; -fx-font-weight: bold;"
+                        <Label style="-fx-text-fill: white; -fx-font-size: 32; -fx-font-weight: bold;"
                                text="BIENVENIDO!!!" />
-                        <Label style="-fx-text-fill: #9ca3af;"
+                        <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 14;"
                                text="Por favor, ingrese su nombre a continuación" />
                      </children>
                   </VBox>
@@ -40,11 +41,11 @@
                      <children>
                         <Label style="-fx-text-fill: #d1d5db;" text="Su nombre:" />
                         <TextField fx:id="txtNombre"
-                                   prefHeight="38.0"
+                                   prefHeight="44.0"
                                    promptText="Ingrese su nombre..."
-                                   style="-fx-background-color: #374151; -fx-text-fill: white;
-                                          -fx-prompt-text-fill: #9ca3af; -fx-background-radius: 8;
-                                          -fx-border-radius: 8; -fx-border-color: #4b5563;" />
+                                   style="-fx-font-size: 18; -fx-background-color: #374151; -fx-text-fill: white;
+                                          -fx-prompt-text-fill: #9ca3af; -fx-background-radius: 10;
+                                          -fx-border-radius: 10; -fx-border-color: #4b5563;" />
                      </children>
                   </VBox>
 
@@ -58,7 +59,7 @@
                      <children>
                         <Label style="-fx-text-fill: #9ca3af;" text="Hola," />
                         <Label fx:id="nameLabel"
-                               style="-fx-text-fill: #818cf8; -fx-font-size: 20; -fx-font-weight: bold;"
+                               style="-fx-text-fill: #818cf8; -fx-font-size: 24; -fx-font-weight: bold;"
                                text="..." />
                      </children>
                   </VBox>
@@ -69,15 +70,15 @@
                           alignment="CENTER"
                           mnemonicParsing="false"
                           style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                 -fx-text-fill: White; -fx-font-size: 14; -fx-font-weight: bold;
+                                 -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;
                                  -fx-background-radius: 12; -fx-cursor: hand;
                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
-                          text="Jugar">
+                          text="JUGAR">
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <VBox.margin>
-                        <Insets left="140.0" />
+                        <Insets left="185.0" />
                      </VBox.margin>
                   </Button>
 
