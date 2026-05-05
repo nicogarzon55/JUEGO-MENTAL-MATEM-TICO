@@ -12,7 +12,9 @@ El objetivo es desarrollar el pensamiento lógico y la capacidad de deducción.
 
 ---
 
-## 🧱 Estructura del proyecto
+## Estructura del proyecto
+
+```
 JMMGame/
 ├── pom.xml
 └── src/main/
