@@ -1,19 +1,15 @@
-# Maven / Java
-
 target/
 *.class
 
-# IDE Eclipse
-
+# IDEs
+.idea/
 .settings/
 .project
 .classpath
 bin/
 
-# Otros
-
+# OS
 .DS_Store
 
 # Evitar archivos reservados en Windows
-
 nul
