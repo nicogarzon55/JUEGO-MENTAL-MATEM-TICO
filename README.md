@@ -1,130 +1,233 @@
-# 🧠 JMM – Juego de Reglas Matemáticas  
-**Java 17 + JavaFX 21 + SQLite | Arquitectura MVC**
+# 🧠 JMM – Juego Mental Matemático
+
+Aplicación de escritorio desarrollada en **Java 17 + JavaFX 21 + PostgreSQL**, basada en arquitectura **MVC**, donde el jugador debe descubrir reglas matemáticas ocultas mediante lógica y deducción.
 
 ---
 
-## 🎯 Descripción
+# 📸 Vista general
 
-JMM es un juego interactivo donde el usuario debe **descubrir reglas matemáticas ocultas** a partir de ejemplos.  
-El juego se divide en dos fases: exploración (prueba de valores) y validación (completar tabla).
+JMM propone un sistema de aprendizaje interactivo dividido en dos fases:
 
-El objetivo es desarrollar el pensamiento lógico y la capacidad de deducción.
+1. **Exploración de patrones**
+2. **Validación de la regla matemática**
+
+El jugador analiza entradas y salidas generadas por el sistema para deducir la fórmula correcta antes de quedarse sin puntos.
 
 ---
 
-## Estructura del proyecto
+# ✨ Características principales
 
-```
+- 🎮 Juego interactivo por niveles
+- 🧠 Reglas matemáticas dinámicas
+- 📊 Sistema de puntaje
+- 🧩 Arquitectura MVC
+- 🎨 Interfaz gráfica moderna con JavaFX
+- 📑 Validación visual de respuestas
+- 🔄 Navegación entre escenas
+- 📚 Ventana integrada de reglas del juego
+
+---
+
+# 🛠 Tecnologías utilizadas
+
+| Tecnología | Uso |
+|---|---|
+| Java 17 | Lógica principal |
+| JavaFX 21 | Interfaz gráfica |
+| Maven | Gestión de dependencias |
+| PostgreSQL | Base de datos |
+| JDBC | Persistencia de datos |
+| CSS | Estilos visuales |
+| FXML | Diseño de interfaces |
+
+---
+
+# 🏗 Arquitectura del proyecto
+
+El proyecto implementa el patrón **MVC (Modelo - Vista - Controlador)**:
+
+## Modelo
+Contiene la lógica del juego y las entidades principales.
+
+- `Juego`
+- `Jugador`
+- `Nivel`
+- `Regla`
+- `TablaIO`
+
+## Vista
+Interfaces gráficas construidas con JavaFX y FXML.
+
+- Interfaces `.fxml`
+- `GameRulesWindow`
+
+## Controladores
+Gestionan la interacción entre la interfaz y la lógica.
+
+- `UsuarioController`
+- `AdivinarReglaController`
+- `JuegoPrincipalController`
+- `JuegoGanadoController`
+- `SelectorNivelController`
+
+## Servicios
+Persistencia y acceso a datos.
+
+- `ConexionBD`
+- `DAOJugador`
+- `DAOPartida`
+- `CRUD`
+
+---
+
+# 📂 Estructura del proyecto
+
+```text
 JMMGame/
 ├── pom.xml
 └── src/main/
     ├── java/co/edu/poli/jmm/
-    │   ├── Main.java                          ← Punto de entrada
+    │   ├── Main.java
+    │   ├── Navegacion.java
     │   ├── modelo/
-    │   │   ├── Juego.java                     ← Coordinador principal
-    │   │   ├── Jugador.java                   ← Entidad jugador
-    │   │   ├── Nivel.java                     ← Nivel con regla y tabla
-    │   │   ├── Regla.java                     ← Lógica de transformación
-    │   │   └── TablaIO.java                   ← Pares entrada/salida
-    │   ├── servicios/
-    │   │   ├── CRUD.java                      ← Interfaz genérica
-    │   │   ├── ConexionBD.java                ← Singleton SQLite
-    │   │   ├── DAOJugador.java                ← Persistencia jugadores
-    │   │   └── DAOPartida.java                ← Persistencia partidas
     │   ├── controladores/
-    │   │   ├── UsuarioController.java         ← Pantalla de bienvenida
-    │   │   ├── AdivinarReglaController.java   ← Fase 1: probar números
-    │   │   ├── JuegoPrincipalController.java  ← Fase 2: completar tabla
-    │   │   └── JuegoGanadoController.java     ← Pantalla de victoria
+    │   ├── servicios/
     │   └── vista/
-    │       └── GameRulesWindow.java           ← Componente guía del juego
-    └── resources/co/edu/poli/jmm/vista/
-        ├── InterfazUsuarioFinal.fxml
-        ├── InterfazAdivinarReglaJuego.fxml
-        ├── InterfazJuegoPrincipal.fxml
-        └── InterfazJuegoGanado.fxml
+    └── resources/
 ```
 
 ---
 
-## Flujo del juego
+# 🎮 Flujo del juego
 
-```
-[Bienvenida] → ingresa nombre
-     ↓
-[Fase 1 – Adivinar Regla]
-  • Ingresa números, observa la salida
-  • Cada intento -1 punto (inicia con 10)
-  • Si llega a 0 → DERROTA
-     ↓  (cuando cree conocer la regla)
-[Fase 2 – Validar Regla]
-  • Tabla con 5 entradas prefijadas
-  • Jugador escribe las salidas
-  • Revisa → verde=correcto / rojo=incorrecto
-     ↓  (si acierta todo)
-[Pantalla Victoria] → +5 puntos bonus
-  • Siguiente nivel  (niveles: Fácil→Medio→Difícil)
-  • Intento nuevo
+```text
+Inicio
+  ↓
+Ingreso de nombre
+  ↓
+Selección de nivel
+  ↓
+Fase 1 → Descubrir patrón
+  ↓
+Fase 2 → Validar respuestas
+  ↓
+Resultado final
+  ↓
+Siguiente nivel o reinicio
 ```
 
 ---
 
-## 📐 Reglas matemáticas por nivel
+# 📐 Reglas matemáticas implementadas
 
-### 🟢 Fácil
-- y = 2x  
-- y = x + 5  
-- y = x - 1  
+## 🟢 Niveles fáciles
+- `y = 2x`
+- `y = x + 5`
+- `y = x - 1`
 
-### 🟡 Medio
-- y = x² + 1  
-- y = 3x + 2  
-- y = 2x - 3  
+## 🟡 Niveles medios
+- `y = x² + 1`
+- `y = 3x + 2`
+- `y = 2x - 3`
 
-### 🔴 Difícil
-- y = 3x - 5  
-- y = x² - x + 2  
-- y = 2x² + 1  
+## 🔴 Niveles difíciles
+- `y = 3x - 5`
+- `y = x² - x + 2`
+- `y = 2x² + 1`
 
 ---
 
-## Cómo ejecutar
+## Tablas utilizadas
 
-### Requisitos
-- Java 17+
+### jugadores
+| Campo | Tipo |
+|---|---|
+| id | INTEGER |
+| nombre | TEXT |
+| puntaje | INTEGER |
+
+### partidas
+| Campo | Tipo |
+|---|---|
+| id | INTEGER |
+| id_jugador | INTEGER |
+| nivel | INTEGER |
+| puntaje | INTEGER |
+| completado | BOOLEAN |
+| fecha | TEXT |
+
+---
+
+# ▶ Cómo ejecutar el proyecto
+
+## Requisitos
+
+- Java 17 o superior
 - Maven 3.8+
 
-### Comandos
+## Clonar repositorio
+
 ```bash
-# Compilar
-mvn clean compile
+git clone https://github.com/nicogarzon55/JUEGO-MENTAL-MATEM-TICO
+```
 
-# Ejecutar
-mvn javafx:run
+## Ejecutar aplicación
 
-# Crear JAR
-mvn package
-java -jar target/jmm-game-1.0-SNAPSHOT.jar
+```bash
+mvn clean javafx:run
+```
+
+## Generar JAR
+
+```bash
+mvn clean package
 ```
 
 ---
 
-## Base de datos
+# 🧩 Componentes destacados
 
-La aplicación crea automáticamente `jmm_game.db` (SQLite) en el directorio de trabajo.
+## 🎯 Sistema de reglas dinámicas
+Cada nivel selecciona aleatoriamente una regla matemática desde un conjunto predefinido.
 
-**Tablas:**
-- `jugadores` — id, nombre, puntaje
-- `partidas`  — id, id_jugador, nivel, puntaje, completado, fecha
+## 📊 Sistema de puntaje
+- El jugador inicia con 10 puntos
+- Cada intento incorrecto reduce el puntaje
+- Completar niveles otorga puntos bonus
 
-Para cambiar a MySQL, modificar las constantes `URL`, `USER` y `PASS` en `ConexionBD.java`.
+## 🎨 Interfaz JavaFX
+La interfaz implementa:
+- tablas dinámicas
+- validaciones visuales
+- ventanas modales
+- estilos personalizados
 
 ---
 
-## Puntos pendientes / extensiones sugeridas
+# 📚 Conceptos aplicados
 
-- [ ] Pantalla de **derrota** dedicada (actualmente muestra alerta y vuelve al inicio)
-- [ ] **Ranking/Leaderboard** usando `DAOJugador.readAll()`
-- [ ] Más reglas matemáticas (agregar casos en `Regla.calcularOutput()`)
-- [ ] Animaciones de transición entre pantallas
-- [ ] Sonidos con `javafx.scene.media`
+- Programación orientada a objetos
+- Arquitectura MVC
+- DAO Pattern
+- Singleton Pattern
+- JavaFX Properties
+- Persistencia con JDBC
+- Manejo de escenas JavaFX
+- Modularización del código
+
+---
+
+# 🚀 Posibles mejoras futuras
+
+- 🏆 Sistema de ranking
+- 🔊 Sonidos y efectos
+- 📈 Estadísticas de partidas
+- 🎞 Animaciones JavaFX
+- 🌐 Modo multijugador
+- 🧮 Más reglas matemáticas
+
+---
+
+# 📄 Licencia
+
+Proyecto desarrollado con fines educativos.
