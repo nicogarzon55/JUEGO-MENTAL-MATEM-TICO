@@ -2,23 +2,32 @@ package co.edu.poli.jmm.servicios;
 
 import co.edu.poli.jmm.modelo.Jugador;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Acceso a datos para la entidad {@link Jugador}.
+ * Acceso a datos de jugadores.
+ * Guarda nuevos jugadores, consulta registros y actualiza puntajes.
  */
 public class DAOJugador implements CRUD<Jugador, Integer> {
 
     private final Connection con;
 
+    /**
+     * Usa la conexion compartida de la aplicacion.
+     */
     public DAOJugador() {
         this.con = ConexionBD.getInstancia().getConexion();
     }
 
-    // ── CRUD ──────────────────────────────────────────────────────────────────
-
+    /**
+     * Inserta un jugador y copia el id generado al objeto recibido.
+     */
     @Override
     public String create(Jugador jugador) {
         String sql = "INSERT INTO jugadores (nombre, puntaje) VALUES (?, ?)";
@@ -38,6 +47,9 @@ public class DAOJugador implements CRUD<Jugador, Integer> {
         }
     }
 
+    /**
+     * Busca un jugador por id.
+     */
     @Override
     public Jugador readOne(Integer id) {
         String sql = "SELECT * FROM jugadores WHERE id = ?";
@@ -54,6 +66,9 @@ public class DAOJugador implements CRUD<Jugador, Integer> {
         return null;
     }
 
+    /**
+     * Lista jugadores ordenados por mayor puntaje.
+     */
     @Override
     public List<Jugador> readAll() {
         List<Jugador> lista = new ArrayList<>();
@@ -69,21 +84,24 @@ public class DAOJugador implements CRUD<Jugador, Integer> {
         return lista;
     }
 
-    /** Actualiza el puntaje de un jugador existente. */
+    /**
+     * Actualiza solo el puntaje de un jugador ya guardado.
+     */
     public String updatePuntaje(Jugador jugador) {
         String sql = "UPDATE jugadores SET puntaje = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, jugador.getPuntaje());
             ps.setInt(2, jugador.getId());
             int filas = ps.executeUpdate();
-            return filas > 0 ? "OK" : "No se encontró el jugador";
+            return filas > 0 ? "OK" : "No se encontro el jugador";
         } catch (SQLException e) {
             return "ERROR: " + e.getMessage();
         }
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
+    /**
+     * Convierte la fila actual del ResultSet en un Jugador.
+     */
     private Jugador mapear(ResultSet rs) throws SQLException {
         Jugador j = new Jugador();
         j.setId(rs.getInt("id"));

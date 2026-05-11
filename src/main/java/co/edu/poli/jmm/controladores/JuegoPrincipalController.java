@@ -12,58 +12,64 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 /**
- * Controlador de InterfazJuegoPrincipal.fxml — Fase 2.
- *
- * El jugador ve una tabla con entradas prefijadas y debe escribir
- * la salida correcta para cada una según la regla que dedujo.
+ * Controla la segunda fase del nivel.
+ * El jugador completa salidas fijas para demostrar que entendio la regla.
  */
 public class JuegoPrincipalController {
 
-    // ── FXML ──────────────────────────────────────────────────────────────────
-    @FXML private TableView<FilaFase2>               tabla;
-    @FXML private TableColumn<FilaFase2, Number>     colEntrada;
-    @FXML private TableColumn<FilaFase2, String>     colSalida;
-    @FXML private Label                              lblPuntaje;
-    @FXML private Label                              lblNivel;
-    @FXML private Button                             btnTema;
+    @FXML private TableView<FilaFase2> tabla;
+    @FXML private TableColumn<FilaFase2, Number> colEntrada;
+    @FXML private TableColumn<FilaFase2, String> colSalida;
+    @FXML private Label lblPuntaje;
+    @FXML private Label lblNivel;
+    @FXML private Button btnTema;
 
-    // ── Modelo ────────────────────────────────────────────────────────────────
-    private Juego  juego;
-    private Nivel  nivelActivo;
+    private Juego juego;
+    private Nivel nivelActivo;
     private boolean modoOscuro = false;
 
     private final ObservableList<FilaFase2> filas = FXCollections.observableArrayList();
 
-    // ── Inner class para las filas de fase 2 ─────────────────────────────────
+    /**
+     * Fila editable de la tabla de validacion.
+     */
     public static class FilaFase2 {
         private final SimpleIntegerProperty entrada;
-        private final SimpleStringProperty  salidaTexto; // el jugador escribe aquí
+        private final SimpleStringProperty salidaTexto;
         private Integer salidaIngresada = null;
         private Boolean respuestaCorrecta = null;
 
         public FilaFase2(int entrada) {
-            this.entrada     = new SimpleIntegerProperty(entrada);
+            this.entrada = new SimpleIntegerProperty(entrada);
             this.salidaTexto = new SimpleStringProperty("");
         }
 
-        public int getEntrada()       { return entrada.get(); }
-        public String getSalidaTexto(){ return salidaTexto.get(); }
+        public int getEntrada() { return entrada.get(); }
+        public String getSalidaTexto() { return salidaTexto.get(); }
         public void setSalidaTexto(String v) { salidaTexto.set(v); }
-        public SimpleIntegerProperty entradaProperty()  { return entrada; }
-        public SimpleStringProperty  salidaTextoProperty() { return salidaTexto; }
+        public SimpleIntegerProperty entradaProperty() { return entrada; }
+        public SimpleStringProperty salidaTextoProperty() { return salidaTexto; }
 
-        public Integer getSalidaIngresada()            { return salidaIngresada; }
-        public void setSalidaIngresada(Integer v)      { this.salidaIngresada = v; }
-        public Boolean getRespuestaCorrecta()          { return respuestaCorrecta; }
-        public void setRespuestaCorrecta(Boolean v)    { this.respuestaCorrecta = v; }
+        public Integer getSalidaIngresada() { return salidaIngresada; }
+        public void setSalidaIngresada(Integer v) { this.salidaIngresada = v; }
+        public Boolean getRespuestaCorrecta() { return respuestaCorrecta; }
+        public void setRespuestaCorrecta(Boolean v) { this.respuestaCorrecta = v; }
     }
 
-    // ── Inicialización ────────────────────────────────────────────────────────
-
+    /**
+     * Configura la tabla editable y sus validaciones de entrada.
+     */
     @FXML
     public void initialize() {
         colEntrada.setCellValueFactory(data -> data.getValue().entradaProperty());
@@ -82,7 +88,6 @@ public class JuegoPrincipalController {
             }
         });
 
-        // Columna editable de salida
         colSalida.setCellValueFactory(data -> data.getValue().salidaTextoProperty());
         colSalida.setCellFactory(col -> new TableCell<>() {
             private final TextField tf = new TextField();
@@ -116,32 +121,36 @@ public class JuegoPrincipalController {
                 }
             }
         });
+
         colSalida.setEditable(true);
         tabla.setEditable(true);
         tabla.setNodeOrientation(javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
         tabla.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Encabezados claros para los títulos de la tabla
-        javafx.scene.control.Label headerEntrada = new javafx.scene.control.Label("ENTRADA");
+        Label headerEntrada = new Label("ENTRADA");
         headerEntrada.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold; -fx-font-size: 14;");
         colEntrada.setGraphic(headerEntrada);
-        javafx.scene.control.Label headerSalida = new javafx.scene.control.Label("SALIDA (escribe aquí)");
+
+        Label headerSalida = new Label("SALIDA (escribe aqui)");
         headerSalida.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold; -fx-font-size: 14;");
         colSalida.setGraphic(headerSalida);
 
         tabla.setItems(filas);
     }
 
-    /** Inyecta el modelo desde la pantalla anterior. */
+    /**
+     * Recibe el modelo desde la primera fase y carga las entradas fijas.
+     */
     public void setJuego(Juego juego) {
-        this.juego       = juego;
+        this.juego = juego;
         this.nivelActivo = juego.getNivelActivo();
         cargarEntradasFase2();
         actualizarUI();
     }
 
-    // ── Carga de datos ────────────────────────────────────────────────────────
-
+    /**
+     * Llena la tabla con las entradas que debe resolver el jugador.
+     */
     private void cargarEntradasFase2() {
         filas.clear();
         for (int entrada : nivelActivo.getEntradasFase2()) {
@@ -149,11 +158,11 @@ public class JuegoPrincipalController {
         }
     }
 
-    // ── Eventos ───────────────────────────────────────────────────────────────
-
+    /**
+     * Valida las respuestas, guarda el resultado y decide si pasa a victoria.
+     */
     @FXML
     private void onRevisarRespuestas() {
-        // Recoger las respuestas ingresadas
         int[] respuestas = new int[filas.size()];
         for (int i = 0; i < filas.size(); i++) {
             String texto = filas.get(i).getSalidaTexto().trim();
@@ -165,66 +174,65 @@ public class JuegoPrincipalController {
                 respuestas[i] = Integer.parseInt(texto);
                 filas.get(i).setSalidaIngresada(respuestas[i]);
             } catch (NumberFormatException e) {
-                mostrarAlerta("Valor inválido", "La salida en la fila " + (i + 1) + " no es un número.");
+                mostrarAlerta("Valor invalido", "La salida en la fila " + (i + 1) + " no es un numero.");
                 return;
             }
         }
 
-        // Verificar con el modelo
         boolean gano = nivelActivo.verificarRespuestas(respuestas);
-
-        // Colorear filas (verde=correcto, rojo=incorrecto)
         colorearFilas(respuestas);
 
         if (gano) {
-            // Sumar 5 puntos bonus
             juego.getJugador().sumarBonus();
-
-            // Guardar en BD
             new DAOJugador().updatePuntaje(juego.getJugador());
             new DAOPartida().guardarPartida(juego.getJugador(), juego.getNivelActual() + 1, true);
 
-            // Navegar a pantalla de victoria
             navegarA("/co/edu/poli/jmm/vista/InterfazJuegoGanado.fxml",
-                     controller -> ((JuegoGanadoController) controller).setJuego(juego));
+                controller -> ((JuegoGanadoController) controller).setJuego(juego));
         } else {
-            // Guardar puntaje actual y mostrar derrota
             new DAOPartida().guardarPartida(juego.getJugador(), juego.getNivelActual() + 1, false);
-            mostrarAlerta("Incorrecto", "Algunas respuestas no son correctas. " +
-                          "Puntaje guardado: " + juego.getJugador().getPuntaje());
+            mostrarAlerta("Incorrecto", "Algunas respuestas no son correctas. Puntaje guardado: "
+                + juego.getJugador().getPuntaje());
         }
     }
 
+    /**
+     * Regresa a la primera fase para seguir probando entradas.
+     */
     @FXML
     private void onRegresar() {
         navegarA("/co/edu/poli/jmm/vista/InterfazAdivinarReglaJuego.fxml",
-                 controller -> ((AdivinarReglaController) controller).setJuego(juego));
+            controller -> ((AdivinarReglaController) controller).setJuego(juego));
     }
 
+    /**
+     * Alterna el color de fondo de esta pantalla.
+     */
     @FXML
     private void onToggleTema() {
         modoOscuro = !modoOscuro;
-        btnTema.setText(modoOscuro ? "☀" : "🌙");
-        // Aplicar estilos de tema oscuro/claro a la escena
+        btnTema.setText(modoOscuro ? "Claro" : "Oscuro");
         Scene scene = tabla.getScene();
-        if (modoOscuro) {
-            scene.getRoot().setStyle("-fx-background-color: #111827;");
-        } else {
-            scene.getRoot().setStyle("-fx-background-color: #f3f4f6;");
-        }
+        scene.getRoot().setStyle(modoOscuro
+            ? "-fx-background-color: #111827;"
+            : "-fx-background-color: #f3f4f6;");
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
+    /**
+     * Marca cada fila como correcta o incorrecta y refresca la tabla.
+     */
     private void colorearFilas(int[] respuestas) {
         for (int i = 0; i < filas.size(); i++) {
             int correcto = nivelActivo.getReglaActiva().calcularOutput(filas.get(i).getEntrada());
-            boolean ok   = i < respuestas.length && respuestas[i] == correcto;
+            boolean ok = i < respuestas.length && respuestas[i] == correcto;
             filas.get(i).setRespuestaCorrecta(ok);
         }
         tabla.refresh();
     }
 
+    /**
+     * Aplica color segun el resultado de una fila.
+     */
     private void aplicarEstiloResultado(TableCell<FilaFase2, ?> cell, FilaFase2 fila) {
         Boolean correcta = fila == null ? null : fila.getRespuestaCorrecta();
         if (correcta == null) {
@@ -236,6 +244,9 @@ public class JuegoPrincipalController {
         cell.setStyle("-fx-background-color: " + fondo + "; -fx-text-fill: white; -fx-font-weight: bold;");
     }
 
+    /**
+     * Define el estilo del campo editable de salida.
+     */
     private String estiloCampoResultado(FilaFase2 fila) {
         Boolean correcta = fila == null ? null : fila.getRespuestaCorrecta();
         if (correcta == null) {
@@ -248,15 +259,22 @@ public class JuegoPrincipalController {
             + "-fx-font-weight: bold; -fx-border-color: transparent;";
     }
 
+    /**
+     * Actualiza los textos de nivel y puntaje.
+     */
     private void actualizarUI() {
         if (juego != null && juego.getJugador() != null) {
             lblPuntaje.setText("Puntos: " + juego.getJugador().getPuntaje());
         }
         if (nivelActivo != null) {
-            lblNivel.setText("Nivel " + (juego.getNivelActual() + 1) + " — Completa los valores de Salida");
+            lblNivel.setText("Nivel " + (juego.getNivelActual() + 1)
+                + " - Completa los valores de salida");
         }
     }
 
+    /**
+     * Muestra un cuadro de mensaje sencillo.
+     */
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
@@ -265,11 +283,17 @@ public class JuegoPrincipalController {
         alert.showAndWait();
     }
 
-    // ── Navegación ────────────────────────────────────────────────────────────
-
+    /**
+     * Permite configurar el controlador de la vista destino antes de mostrarla.
+     */
     @FunctionalInterface
-    interface ControllerCallback { void configure(Object c); }
+    interface ControllerCallback {
+        void configure(Object c);
+    }
 
+    /**
+     * Cambia de pantalla sin perder el estado del juego.
+     */
     private void navegarA(String fxml, ControllerCallback callback) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
@@ -279,7 +303,7 @@ public class JuegoPrincipalController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
-            System.err.println("[JuegoPrincipalController] Navegación fallida: " + e.getMessage());
+            System.err.println("[JuegoPrincipalController] Navegacion fallida: " + e.getMessage());
             e.printStackTrace();
         }
     }

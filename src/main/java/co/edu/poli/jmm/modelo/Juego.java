@@ -1,18 +1,21 @@
 package co.edu.poli.jmm.modelo;
 
 /**
- * Clase principal que coordina la sesión de juego.
+ * Coordina una sesion de juego.
  * Contiene el jugador activo, los niveles disponibles y el estado global.
  */
 public class Juego {
 
-    private String  nombreJugador;
-    private int     nivelActual;
+    private String nombreJugador;
+    private int nivelActual;
     private Jugador jugador;
     private Nivel[] nivel;
 
+    /**
+     * Crea los siete niveles del recorrido y deja seleccionado el primero.
+     */
     public Juego() {
-        // 7 niveles: 1-2 Fácil, 3-4 Medio, 5-6-7 Difícil
+        // Niveles 1-2: facil, 3-4: medio, 5-7: dificil.
         nivel = new Nivel[]{
             new Nivel(1, Regla.FACIL),
             new Nivel(2, Regla.FACIL),
@@ -25,11 +28,9 @@ public class Juego {
         nivelActual = 0;
     }
 
-    // ── Lógica principal ──────────────────────────────────────────────────────
-
     /**
      * Inicia una nueva partida con el nombre recibido.
-     * Crea el jugador y arranca el nivel seleccionado.
+     * Crea el jugador y prepara el nivel seleccionado.
      */
     public boolean iniciarJuego() {
         jugador = new Jugador(1, nombreJugador);
@@ -37,7 +38,7 @@ public class Juego {
     }
 
     /**
-     * Actualiza el puntaje del jugador sumando o restando pts.
+     * Suma o resta puntos sin permitir que el puntaje quede por debajo de cero.
      */
     public int actualizarPuntaje(int pts) {
         int nuevo = jugador.getPuntaje() + pts;
@@ -47,7 +48,8 @@ public class Juego {
 
     /**
      * Avanza al siguiente nivel si existe.
-     * @return el nuevo Nivel, o null si no hay más niveles
+     *
+     * @return nuevo nivel activo, o null si ya no hay mas niveles
      */
     public Nivel avanzarNivel() {
         nivelActual++;
@@ -55,7 +57,7 @@ public class Juego {
             nivel[nivelActual].iniciar();
             return nivel[nivelActual];
         }
-        return null; // juego completado
+        return null;
     }
 
     /**
@@ -71,27 +73,25 @@ public class Juego {
         return nivel[nivelActual];
     }
 
-    /** Retorna true si el jugador aún tiene puntos. */
+    /** Indica si el jugador aun puede seguir intentando. */
     public boolean jugadorTienePuntos() {
         return jugador != null && jugador.getPuntaje() > 0;
     }
 
-    /** Retorna true si hay un nivel siguiente disponible. */
+    /** Indica si hay un nivel siguiente disponible. */
     public boolean hayNivelSiguiente() {
         return nivelActual + 1 < nivel.length;
     }
 
-    // ── Getters / Setters ─────────────────────────────────────────────────────
+    public String getNombreJugador() { return nombreJugador; }
+    public void setNombreJugador(String nombreJugador) { this.nombreJugador = nombreJugador; }
 
-    public String getNombreJugador()                      { return nombreJugador; }
-    public void setNombreJugador(String nombreJugador)    { this.nombreJugador = nombreJugador; }
+    public int getNivelActual() { return nivelActual; }
+    public void setNivelActual(int nivelActual) { this.nivelActual = nivelActual; }
 
-    public int getNivelActual()                  { return nivelActual; }
-    public void setNivelActual(int nivelActual)  { this.nivelActual = nivelActual; }
+    public Jugador getJugador() { return jugador; }
+    public void setJugador(Jugador jugador) { this.jugador = jugador; }
 
-    public Jugador getJugador()              { return jugador; }
-    public void setJugador(Jugador jugador)  { this.jugador = jugador; }
-
-    public Nivel[] getNivel()              { return nivel; }
-    public void setNivel(Nivel[] nivel)    { this.nivel = nivel; }
+    public Nivel[] getNivel() { return nivel; }
+    public void setNivel(Nivel[] nivel) { this.nivel = nivel; }
 }

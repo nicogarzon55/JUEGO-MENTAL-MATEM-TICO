@@ -11,58 +11,60 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controlador de InterfazUsuarioFinal.fxml
- * Permite al jugador ingresar su nombre y comenzar la partida.
+ * Controla la pantalla inicial.
+ * Valida el nombre del jugador, crea la partida y envia el modelo a la pantalla de niveles.
  */
 public class UsuarioController {
 
     @FXML private TextField txtNombre;
-    @FXML private Label     nameLabel;
+    @FXML private Label nameLabel;
 
-    /** Referencia compartida al modelo del juego. */
+    /** Modelo compartido durante toda la partida. */
     private final Juego juego = new Juego();
 
-    // ── Inicialización ────────────────────────────────────────────────────────
-
+    /**
+     * Actualiza la vista previa del saludo mientras el usuario escribe su nombre.
+     */
     @FXML
     public void initialize() {
-        // Actualizar el label de vista previa mientras el usuario escribe
-        txtNombre.textProperty().addListener((obs, viejo, nuevo) -> {
-            nameLabel.setText(nuevo.isBlank() ? "..." : nuevo);
-        });
+        txtNombre.textProperty().addListener((obs, viejo, nuevo) ->
+            nameLabel.setText(nuevo.isBlank() ? "..." : nuevo)
+        );
     }
 
-    // ── Eventos ───────────────────────────────────────────────────────────────
-
+    /**
+     * Inicia el juego si el nombre es valido y guarda el jugador en la base de datos.
+     */
     @FXML
     private void onJugar() {
         String nombre = txtNombre.getText().trim();
         if (nombre.isBlank()) {
-            nameLabel.setText("¡Ingresa tu nombre!");
+            nameLabel.setText("Ingresa tu nombre");
             nameLabel.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 14;");
             return;
         }
 
-        // Configurar el juego con el nombre ingresado
         juego.setNombreJugador(nombre);
         juego.iniciarJuego();
 
-        // Guardar jugador en BD
         DAOJugador daoJugador = new DAOJugador();
         daoJugador.create(juego.getJugador());
 
-        // Navegar al selector de nivel
         navegarA("/co/edu/poli/jmm/vista/InterfazSelectorNivel.fxml",
-                 controller -> ((SelectorNivelController) controller).setJuego(juego));
+            controller -> ((SelectorNivelController) controller).setJuego(juego));
     }
 
-    // ── Navegación ────────────────────────────────────────────────────────────
-
+    /**
+     * Permite configurar el controlador de la vista destino antes de mostrarla.
+     */
     @FunctionalInterface
     interface ControllerCallback {
         void configure(Object controller);
     }
 
+    /**
+     * Cambia a otra vista FXML conservando el modelo de juego cuando se requiere.
+     */
     private void navegarA(String fxml, ControllerCallback callback) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));

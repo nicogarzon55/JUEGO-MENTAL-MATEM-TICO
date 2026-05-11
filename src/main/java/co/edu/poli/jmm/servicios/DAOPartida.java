@@ -2,36 +2,44 @@ package co.edu.poli.jmm.servicios;
 
 import co.edu.poli.jmm.modelo.Jugador;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representa una fila de la tabla "partidas".
- * Se usa como DTO sencillo dentro de DAOPartida.
+ * DTO interno que representa una fila de la tabla partidas.
  */
 class Partida {
-    int     id;
-    int     idJugador;
-    int     nivel;
-    int     puntaje;
+    int id;
+    int idJugador;
+    int nivel;
+    int puntaje;
     boolean completado;
-    String  fecha;
+    String fecha;
 }
 
 /**
- * Acceso a datos para partidas guardadas.
+ * Acceso a datos de partidas jugadas.
+ * Permite guardar resultados y consultar el historial.
  */
 public class DAOPartida implements CRUD<Partida, Integer> {
 
     private final Connection con;
 
+    /**
+     * Usa la conexion compartida de la aplicacion.
+     */
     public DAOPartida() {
         this.con = ConexionBD.getInstancia().getConexion();
     }
 
-    // ── CRUD ──────────────────────────────────────────────────────────────────
-
+    /**
+     * Inserta una partida y asigna el id generado.
+     */
     @Override
     public String create(Partida p) {
         String sql = "INSERT INTO partidas (id_jugador, nivel, puntaje, completado) VALUES (?, ?, ?, ?)";
@@ -50,6 +58,9 @@ public class DAOPartida implements CRUD<Partida, Integer> {
         }
     }
 
+    /**
+     * Busca una partida por id.
+     */
     @Override
     public Partida readOne(Integer id) {
         String sql = "SELECT * FROM partidas WHERE id = ?";
@@ -64,6 +75,9 @@ public class DAOPartida implements CRUD<Partida, Integer> {
         return null;
     }
 
+    /**
+     * Lista las partidas mas recientes primero.
+     */
     @Override
     public List<Partida> readAll() {
         List<Partida> lista = new ArrayList<>();
@@ -78,28 +92,28 @@ public class DAOPartida implements CRUD<Partida, Integer> {
     }
 
     /**
-     * Guarda la partida final de un jugador.
-     * Método de conveniencia llamado desde los controladores.
+     * Guarda el resultado final de un nivel para el jugador indicado.
      */
     public String guardarPartida(Jugador jugador, int nivelNum, boolean completado) {
         Partida p = new Partida();
-        p.idJugador  = jugador.getId();
-        p.nivel      = nivelNum;
-        p.puntaje    = jugador.getPuntaje();
+        p.idJugador = jugador.getId();
+        p.nivel = nivelNum;
+        p.puntaje = jugador.getPuntaje();
         p.completado = completado;
         return create(p);
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
+    /**
+     * Convierte la fila actual del ResultSet en una Partida.
+     */
     private Partida mapear(ResultSet rs) throws SQLException {
         Partida p = new Partida();
-        p.id         = rs.getInt("id");
-        p.idJugador  = rs.getInt("id_jugador");
-        p.nivel      = rs.getInt("nivel");
-        p.puntaje    = rs.getInt("puntaje");
+        p.id = rs.getInt("id");
+        p.idJugador = rs.getInt("id_jugador");
+        p.nivel = rs.getInt("nivel");
+        p.puntaje = rs.getInt("puntaje");
         p.completado = rs.getInt("completado") == 1;
-        p.fecha      = rs.getString("fecha");
+        p.fecha = rs.getString("fecha");
         return p;
     }
 }

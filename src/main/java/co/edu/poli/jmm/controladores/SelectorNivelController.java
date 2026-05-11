@@ -11,10 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Controlador de InterfazSelectorNivel.fxml
- *
- * Muestra los 7 botones de nivel y el botón de reglas del juego.
- * Recibe el objeto Juego ya configurado desde UsuarioController.
+ * Controla la seleccion de nivel.
+ * Recibe el juego ya creado y permite empezar desde cualquiera de los siete niveles.
  */
 public class SelectorNivelController {
 
@@ -28,13 +26,12 @@ public class SelectorNivelController {
 
     private Juego juego;
 
-    // ── Inyección del modelo ──────────────────────────────────────────────────
-
+    /**
+     * Recibe el modelo que viene desde la pantalla de usuario.
+     */
     public void setJuego(Juego juego) {
         this.juego = juego;
     }
-
-    // ── Botones de nivel ──────────────────────────────────────────────────────
 
     @FXML private void irNivel1() { iniciarDesdeNivel(0); }
     @FXML private void irNivel2() { iniciarDesdeNivel(1); }
@@ -44,41 +41,46 @@ public class SelectorNivelController {
     @FXML private void irNivel6() { iniciarDesdeNivel(5); }
     @FXML private void irNivel7() { iniciarDesdeNivel(6); }
 
+    /**
+     * Ajusta el nivel activo, lo reinicia y abre la primera fase.
+     */
     private void iniciarDesdeNivel(int indice) {
         juego.setNivelActual(indice);
         juego.getNivelActivo().iniciar();
 
-        navegarA(
-            "/co/edu/poli/jmm/vista/InterfazAdivinarReglaJuego.fxml",
-            controller -> ((AdivinarReglaController) controller).setJuego(juego)
-        );
+        navegarA("/co/edu/poli/jmm/vista/InterfazAdivinarReglaJuego.fxml",
+            controller -> ((AdivinarReglaController) controller).setJuego(juego));
     }
 
-    // ── Botón Reglas ──────────────────────────────────────────────────────────
-
+    /**
+     * Muestra la guia del juego en una ventana modal.
+     */
     @FXML
     private void abrirReglas() {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(btn_level1.getScene().getWindow());
-        dialog.setTitle("Guía del Juego");
+        dialog.setTitle("Guia del Juego");
         dialog.setResizable(false);
 
         GameRulesWindow rulesView = new GameRulesWindow(dialog::close);
-
         Scene scene = new Scene(rulesView, 800, 640);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         dialog.setScene(scene);
         dialog.showAndWait();
     }
 
-    // ── Navegación ────────────────────────────────────────────────────────────
-
+    /**
+     * Permite configurar el controlador de la vista destino antes de mostrarla.
+     */
     @FunctionalInterface
     interface ControllerCallback {
         void configure(Object controller);
     }
 
+    /**
+     * Cambia a otra vista FXML y conserva el modelo de juego.
+     */
     private void navegarA(String fxml, ControllerCallback callback) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));

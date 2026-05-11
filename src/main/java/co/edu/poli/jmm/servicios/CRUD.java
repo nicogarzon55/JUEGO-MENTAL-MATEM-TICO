@@ -3,19 +3,19 @@ package co.edu.poli.jmm.servicios;
 import java.util.List;
 
 /**
- * Interfaz genérica de operaciones CRUD.
+ * Contrato basico para clases de acceso a datos.
  *
- * @param <T> tipo de entidad
- * @param <K> tipo de clave primaria
+ * @param <T> tipo de entidad que se almacena
+ * @param <K> tipo de clave con la que se consulta
  */
 public interface CRUD<T, K> {
 
-    /** Persiste la entidad y retorna un mensaje de resultado. */
+    /** Guarda una entidad y retorna un mensaje con el resultado. */
     String create(T t);
 
-    /** Busca y retorna una entidad por su clave primaria. */
+    /** Busca una entidad por su clave primaria. */
     T readOne(K id);
 
-    /** Retorna todas las entidades almacenadas. */
+    /** Lista todas las entidades disponibles. */
     List<T> readAll();
 }
