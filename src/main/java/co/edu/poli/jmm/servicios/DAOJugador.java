@@ -21,6 +21,12 @@ public class DAOJugador implements CRUD<Jugador, Integer> {
 
     @Override
     public String create(Jugador jugador) {
+        // Verificar si ya existe un jugador con ese nombre
+        Jugador existente = buscarPorNombre(jugador.getNombre());
+        if (existente != null) {
+            return "DUPLICADO: El nick '" + jugador.getNombre() + "' ya está registrado.";
+        }
+
         String sql = "INSERT INTO jugadores (nombre, puntaje) VALUES (?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, jugador.getNombre());
@@ -80,6 +86,22 @@ public class DAOJugador implements CRUD<Jugador, Integer> {
         } catch (SQLException e) {
             return "ERROR: " + e.getMessage();
         }
+    }
+
+    /** Busca un jugador por nombre exacto. Retorna null si no existe. */
+    public Jugador buscarPorNombre(String nombre) {
+        String sql = "SELECT id, nombre, puntaje FROM jugadores WHERE LOWER(nombre) = LOWER(?) LIMIT 1";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapear(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[DAOJugador] buscarPorNombre: " + e.getMessage());
+        }
+        return null;
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────

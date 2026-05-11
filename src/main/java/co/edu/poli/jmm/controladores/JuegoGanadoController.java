@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -19,17 +20,24 @@ import javafx.stage.Stage;
 public class JuegoGanadoController {
 
     // ── FXML ──────────────────────────────────────────────────────────────────
-    @FXML private TableView<FilaResultado>               tablaResultados;
-    @FXML private TableColumn<FilaResultado, Number>     colEntrada;
-    @FXML private TableColumn<FilaResultado, Number>     colSalida;
-    @FXML private Label                                  lblTitulo;
-    @FXML private Label                                  lblPuntaje;
-    @FXML private Button                                 btnSiguienteNivel;
-    @FXML private Button                                 btnTema;
+    @FXML private TableView<FilaResultado>           tablaResultados;
+    @FXML private TableColumn<FilaResultado, Number> colEntrada;
+    @FXML private TableColumn<FilaResultado, Number> colSalida;
+    @FXML private Label                              lblTitulo;
+    @FXML private Label                              lblPuntaje;
+    @FXML private Button                             btnSiguienteNivel;
+    @FXML private Button                             btnTema;
+
+    // ── FXML Panel Puntaje Final ───────────────────────────────────────────────
+    @FXML private VBox   panelPuntajeFinal;
+    @FXML private Label  lblPuntajeFinal;
+    @FXML private Label  lblMensajePuntaje;
+    @FXML private Button btnVerPuntaje;
 
     // ── Modelo ────────────────────────────────────────────────────────────────
-    private Juego  juego;
-    private boolean modoOscuro = false;
+    private Juego   juego;
+    private boolean modoOscuro      = false;
+    private boolean puntajeVisible  = false;   // toggle del panel
 
     private final ObservableList<FilaResultado> filas = FXCollections.observableArrayList();
 
@@ -53,18 +61,20 @@ public class JuegoGanadoController {
         colEntrada.setCellValueFactory(data -> data.getValue().entradaProperty());
         colSalida.setCellValueFactory(data  -> data.getValue().salidaProperty());
 
-        // Encabezados oscuros para los títulos de la tabla (coherente con tema dark)
-        javafx.scene.control.Label headerEntrada = new javafx.scene.control.Label("Entrada");
+        Label headerEntrada = new Label("Entrada");
         headerEntrada.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
         colEntrada.setGraphic(headerEntrada);
-        javafx.scene.control.Label headerSalida = new javafx.scene.control.Label("Salida Correcta");
+
+        Label headerSalida = new Label("Salida Correcta");
         headerSalida.setStyle("-fx-text-fill: #374151; -fx-font-weight: bold;");
         colSalida.setGraphic(headerSalida);
 
-        // Evitar columna vacía final: forzar que las columnas llenen el ancho disponible
         tablaResultados.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         tablaResultados.setItems(filas);
+
+        // Panel oculto al inicio (ya viene así desde el FXML, pero lo reforzamos)
+        panelPuntajeFinal.setVisible(false);
+        panelPuntajeFinal.setManaged(false);
     }
 
     /** Inyecta el modelo al llegar desde la fase 2. */
@@ -87,26 +97,50 @@ public class JuegoGanadoController {
 
     // ── Eventos ───────────────────────────────────────────────────────────────
 
+    /**
+     * Muestra u oculta el panel de puntaje final.
+     * El botón actúa como toggle: primera pulsación muestra, segunda oculta.
+     */
+    @FXML
+    private void onVerPuntaje() {
+        puntajeVisible = !puntajeVisible;
+
+        if (puntajeVisible) {
+            int pts = juego != null && juego.getJugador() != null
+                    ? juego.getJugador().getPuntaje() : 0;
+
+            lblPuntajeFinal.setText(String.valueOf(pts));
+            lblMensajePuntaje.setText(obtenerMensajePorPuntaje(pts));
+
+            panelPuntajeFinal.setVisible(true);
+            panelPuntajeFinal.setManaged(true);
+            btnVerPuntaje.setText("Ocultar puntaje");
+        } else {
+            panelPuntajeFinal.setVisible(false);
+            panelPuntajeFinal.setManaged(false);
+            btnVerPuntaje.setText("¿Quieres ver tu puntaje?");
+        }
+    }
+
     @FXML
     private void onSiguienteNivel() {
         Nivel siguiente = juego.avanzarNivel();
         if (siguiente == null) {
             mostrarAlerta("¡Felicidades!", "¡Completaste todos los niveles! Puntaje final: "
-                          + juego.getJugador().getPuntaje());
+                    + juego.getJugador().getPuntaje());
             navegarA("/co/edu/poli/jmm/vista/InterfazUsuarioFinal.fxml", null);
         } else {
             navegarA("/co/edu/poli/jmm/vista/InterfazAdivinarReglaJuego.fxml",
-                     controller -> ((AdivinarReglaController) controller).setJuego(juego));
+                    controller -> ((AdivinarReglaController) controller).setJuego(juego));
         }
     }
 
     @FXML
     private void onIntentoNuevo() {
-        // Reinicia el nivel actual sin cambiar de nivel
         juego.reiniciarNivel();
-        juego.getJugador().setPuntaje(10); // Reiniciar puntos para el nuevo intento
+        juego.getJugador().setPuntaje(10);
         navegarA("/co/edu/poli/jmm/vista/InterfazAdivinarReglaJuego.fxml",
-                 controller -> ((AdivinarReglaController) controller).setJuego(juego));
+                controller -> ((AdivinarReglaController) controller).setJuego(juego));
     }
 
     @FXML
@@ -115,8 +149,8 @@ public class JuegoGanadoController {
         btnTema.setText(modoOscuro ? "☀" : "🌙");
         Scene scene = tablaResultados.getScene();
         scene.getRoot().setStyle(modoOscuro
-            ? "-fx-background-color: linear-gradient(to bottom right, #052e16, #14532d);"
-            : "-fx-background-color: linear-gradient(to bottom right, #ecfdf5, #d1fae5);");
+                ? "-fx-background-color: linear-gradient(to bottom right, #052e16, #14532d);"
+                : "-fx-background-color: linear-gradient(to bottom right, #ecfdf5, #d1fae5);");
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -129,12 +163,22 @@ public class JuegoGanadoController {
         Nivel nivel = juego.getNivelActivo();
         if (nivel != null && lblTitulo != null) {
             lblTitulo.setText("¡Descubriste la regla: " +
-                              nivel.getReglaActiva().getDescripcion() + "!");
+                    nivel.getReglaActiva().getDescripcion() + "!");
         }
-        // Ocultar botón "Siguiente Nivel" si no hay más niveles
         if (btnSiguienteNivel != null) {
             btnSiguienteNivel.setDisable(!juego.hayNivelSiguiente());
         }
+    }
+
+    /**
+     * Devuelve un mensaje motivacional según el puntaje obtenido.
+     * Ajusta los rangos a tu lógica de negocio.
+     */
+    private String obtenerMensajePorPuntaje(int pts) {
+        if (pts >= 90) return "🌟 ¡Rendimiento perfecto!";
+        if (pts >= 70) return "👏 ¡Excelente desempeño!";
+        if (pts >= 50) return "👍 ¡Buen trabajo!";
+        return "💪 ¡Sigue practicando!";
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

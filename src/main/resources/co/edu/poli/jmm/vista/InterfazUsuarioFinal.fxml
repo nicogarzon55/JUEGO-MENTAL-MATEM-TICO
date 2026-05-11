@@ -5,34 +5,51 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.poli.jmm.controladores.UsuarioController">
+<AnchorPane
+        maxHeight="-Infinity" maxWidth="-Infinity"
+        minHeight="-Infinity" minWidth="-Infinity"
+        prefHeight="600.0" prefWidth="800.0"
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="co.edu.poli.jmm.controladores.UsuarioController">
 
    <children>
-      <StackPane style="-fx-background-color: linear-gradient(to bottom right, #111827, #1f2937);"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane
+              style="-fx-background-color: linear-gradient(to bottom right, #111827, #1f2937);"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+
          <children>
-            <VBox maxWidth="700.0" prefWidth="520.0" spacing="24.0"
-                  style="-fx-background-color: #1f2937; -fx-background-radius: 20;
-                         -fx-border-color: #374151; -fx-border-radius: 20; -fx-border-width: 2;
-                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12,0,0,4);"
-                  StackPane.alignment="CENTER">
+            <VBox
+                    maxWidth="700.0" prefWidth="520.0" spacing="20.0"
+                    style="-fx-background-color: #1f2937; -fx-background-radius: 20; -fx-border-color: #374151; -fx-border-radius: 20; -fx-border-width: 2; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12,0,0,4);"
+                    StackPane.alignment="CENTER">
+
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
+
+               <StackPane.margin>
+                  <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+               </StackPane.margin>
+
                <children>
 
                   <!-- Título -->
                   <VBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Label style="-fx-text-fill: white; -fx-font-size: 32; -fx-font-weight: bold;"
-                               text="BIENVENIDO!!!" />
-                        <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 14;"
-                               text="Por favor, ingrese su nombre a continuación" />
+                        <Label
+                                style="-fx-text-fill: white; -fx-font-size: 32; -fx-font-weight: bold;"
+                                text="BIENVENIDO!!!" />
+                        <Label
+                                style="-fx-text-fill: #9ca3af; -fx-font-size: 14;"
+                                text="Por favor, ingrese su nombre a continuación" />
                      </children>
                   </VBox>
 
@@ -40,55 +57,86 @@
                   <VBox spacing="5.0">
                      <children>
                         <Label style="-fx-text-fill: #d1d5db;" text="Su nombre:" />
-                        <TextField fx:id="txtNombre"
-                                   prefHeight="44.0"
-                                   promptText="Ingrese su nombre..."
-                                   style="-fx-font-size: 18; -fx-background-color: #374151; -fx-text-fill: white;
-                                          -fx-prompt-text-fill: #9ca3af; -fx-background-radius: 10;
-                                          -fx-border-radius: 10; -fx-border-color: #4b5563;" />
+                        <TextField
+                                fx:id="txtNombre"
+                                prefHeight="44.0"
+                                promptText="Ingrese su nombre..."
+                                style="-fx-font-size: 18; -fx-background-color: #374151; -fx-text-fill: white; -fx-prompt-text-fill: #9ca3af; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #4b5563;" />
                      </children>
                   </VBox>
 
                   <!-- Vista previa del nombre -->
                   <VBox alignment="CENTER" spacing="2.0"
-                        style="-fx-background-color: #374151; -fx-border-color: #4b5563;
-                               -fx-background-radius: 8; -fx-border-radius: 8;">
+                        style="-fx-background-color: #374151; -fx-border-color: #4b5563; -fx-background-radius: 8; -fx-border-radius: 8;">
                      <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                        <Insets bottom="12.0" left="15.0" right="15.0" top="12.0" />
                      </padding>
                      <children>
                         <Label style="-fx-text-fill: #9ca3af;" text="Hola," />
-                        <Label fx:id="nameLabel"
-                               style="-fx-text-fill: #818cf8; -fx-font-size: 24; -fx-font-weight: bold;"
-                               text="..." />
+                        <Label
+                                fx:id="nameLabel"
+                                style="-fx-text-fill: #818cf8; -fx-font-size: 24; -fx-font-weight: bold;"
+                                text="..." />
                      </children>
                   </VBox>
 
-                  <!-- Botón Jugar -->
-                  <Button fx:id="botonJugar"
-                          onAction="#onJugar"
+                  <!-- Mensaje de estado -->
+                  <Label
+                          fx:id="lblMensaje"
                           alignment="CENTER"
-                          mnemonicParsing="false"
-                          style="-fx-background-color: linear-gradient(to right,#6366f1, #8b5cf6);
-                                 -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;
-                                 -fx-background-radius: 12; -fx-cursor: hand;
-                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
-                          text="JUGAR">
+                          maxWidth="Infinity"
+                          style="-fx-font-size: 13px; -fx-text-fill: transparent;"
+                          text=" " />
+
+                  <!-- Botones -->
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <Button
+                                fx:id="btnJugar"
+                                onAction="#onJugar"
+                                style="-fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
+                                text="🎮  NUEVO JUEGO">
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </Button>
+
+                        <Button
+                                fx:id="btnContinuar"
+                                onAction="#onContinuar"
+                                style="-fx-background-color: linear-gradient(to right, #059669, #10b981); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10,0,0,3);"
+                                text="▶  CONTINUAR JUEGO">
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+
+                  <!-- Panel puntaje recuperado (oculto por defecto) -->
+                  <VBox
+                          fx:id="panelPuntajeRecuperado"
+                          alignment="CENTER" spacing="4.0"
+                          managed="false" visible="false"
+                          style="-fx-background-color: #111827; -fx-background-radius: 12; -fx-border-color: #10b981; -fx-border-radius: 12; -fx-border-width: 2; -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.35), 14,0,0,0);">
                      <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="14.0" left="20.0" right="20.0" top="14.0" />
                      </padding>
-                     <VBox.margin>
-                        <Insets left="185.0" />
-                     </VBox.margin>
-                  </Button>
+                     <children>
+                        <Label
+                                style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-font-weight: bold;"
+                                text="ÚLTIMA PARTIDA RECUPERADA" />
+                        <Label
+                                fx:id="lblPuntajeRecuperado"
+                                style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #10b981;"
+                                text="0" />
+                        <Label
+                                style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"
+                                text="puntos · ¡Bienvenido de vuelta!" />
+                     </children>
+                  </VBox>
 
                </children>
-               <padding>
-                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-               </padding>
-               <StackPane.margin>
-                  <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />
-               </StackPane.margin>
             </VBox>
          </children>
       </StackPane>
