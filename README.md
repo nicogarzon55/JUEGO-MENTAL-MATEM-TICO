@@ -168,7 +168,7 @@ Siguiente nivel o reinicio
 ## Clonar repositorio
 
 ```bash
-git clone https://github.com/TU-USUARIO/TU-REPOSITORIO.git
+git clone https://github.com/TU-USUARIO/TU-REPOSITORIO.git](https://github.com/nicogarzon55/JUEGO-MENTAL-MATEM-TICO
 ```
 
 ## Ejecutar aplicación
